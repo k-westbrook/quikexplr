@@ -33,8 +33,8 @@ class Test extends React.Component {
           Will it rain in the next few days?{' '}
           {this.props.weather.rainAverage.rainStrChance}
         </h2>
-        {(this.props.weather.rainAverage.warn ||
-          this.props.weather.snowAverage.warn) && (
+        {(this.props.weather.rainAverage.extremeWeatherWarn ||
+          this.props.weather.snowAverage.extremeWeatherWarn) && (
           <h3>
             On average, there could be an intense weather condition in the next
             five days.
