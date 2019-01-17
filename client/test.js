@@ -10,7 +10,6 @@ class Test extends React.Component {
 
   onSubmit() {
     this.props.getLocationThunk()
-    console.log('here')
   }
   render() {
     return (
@@ -19,6 +18,9 @@ class Test extends React.Component {
         <button type="submit" onClick={this.onSubmit}>
           Test Button
         </button>
+        <h2>
+          Your location: {this.props.location.city} {this.props.location.state}{' '}
+        </h2>
       </div>
     )
   }
