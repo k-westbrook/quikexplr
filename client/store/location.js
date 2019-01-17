@@ -24,7 +24,7 @@ export const getLocationThunk = () => async dispatch => {
     const ip = await axios.get('/api/location/ip')
     console.log(ip, 'ip')
     const res = await axios.get(
-      `http://api.ipstack.com/${ip.data}?access_key=${process.env.IPSTACK_KEY}`
+      `https://api.ipstack.com/${ip.data}?access_key=${process.env.IPSTACK_KEY}`
     )
     dispatch(getLocation(res.data || userLocation))
     console.log(res.data, 'RETURNED')
