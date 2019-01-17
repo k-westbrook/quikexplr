@@ -12,6 +12,7 @@ class Test extends React.Component {
     this.props.getLocationThunk()
   }
   render() {
+    console.log(this.props.location.location)
     return (
       <div>
         <h1>Test</h1>
@@ -21,6 +22,7 @@ class Test extends React.Component {
         <h2>
           Your location: {this.props.location.city} {this.props.location.state}{' '}
         </h2>
+        <h2>{this.props.location.country_name}</h2>
       </div>
     )
   }

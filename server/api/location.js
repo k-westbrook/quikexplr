@@ -7,8 +7,8 @@ router.get('/', async (req, res, next) => {
   try {
     const clientIP = req.clientInfo.ip
     await ipstack(
-      clientIP,
-      '414afdef423bbe931fda241e31c86d0d',
+      '172.254.159.106',
+      process.env.IPSTACK_KEY,
       (err, response) => {
         try {
           res.json(response)
@@ -20,4 +20,8 @@ router.get('/', async (req, res, next) => {
   } catch (err) {
     next(err)
   }
+})
+
+router.get('https://api.weather.gov/points/', async (req, res, next) => {
+  console.log(res)
 })
