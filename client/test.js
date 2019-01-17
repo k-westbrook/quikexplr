@@ -23,12 +23,26 @@ class Test extends React.Component {
         <h2>
           Your location: {this.props.location.city} {this.props.location.state}{' '}
         </h2>
-        <h2>
-          Avg % Clouds for the next 5 days: {this.props.weather.cloudAverage}%
-        </h2>
+        <h2>Avg Chance of Clear Skies {this.props.weather.clearAverage}%</h2>
         <h2>Avg Temp for the next 5 days: {this.props.weather.tempAverage}</h2>
-        <h2>Snow: {this.props.weather.snow}</h2>
-        <h2>Rain: {this.props.weather.rain}</h2>
+        <h2>
+          Will it snow in the next few days?:{' '}
+          {this.props.weather.snowAverage.snowStrChance}
+        </h2>
+        <h2>
+          Will it rain in the next few days?{' '}
+          {this.props.weather.rainAverage.rainStrChance}
+        </h2>
+        {(this.props.weather.rainAverage.warn ||
+          this.props.weather.snowAverage.warn) && (
+          <h3>
+            On average, there could be an intense weather condition in the next
+            five days.
+          </h3>
+        )}
+        {this.props.weather.snowAverage.pleasantWinter && (
+          <h3>Chance for a pleasant light snow</h3>
+        )}
       </div>
     )
   }

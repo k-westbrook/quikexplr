@@ -9,7 +9,10 @@ const GET_WEATHER = 'GET_WEATHER'
 /**
  * INITIAL STATE
  */
-const cityWeather = {}
+const cityWeather = {
+  snowAverage: {},
+  rainAverage: {}
+}
 
 /**
  * ACTION CREATORS
