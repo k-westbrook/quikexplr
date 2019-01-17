@@ -1,5 +1,6 @@
 import React from 'react'
 import {getLocationThunk} from './store/location'
+import {getWeatherThunk} from './store/weather'
 import {connect} from 'react-redux'
 
 class Test extends React.Component {
@@ -10,9 +11,9 @@ class Test extends React.Component {
 
   onSubmit() {
     this.props.getLocationThunk()
+    this.props.getWeatherThunk()
   }
   render() {
-    console.log(this.props.location.location)
     return (
       <div>
         <h1>Test</h1>
@@ -22,7 +23,12 @@ class Test extends React.Component {
         <h2>
           Your location: {this.props.location.city} {this.props.location.state}{' '}
         </h2>
-        <h2>{this.props.location.country_name}</h2>
+        <h2>
+          Avg % Clouds for the next 5 days: {this.props.weather.cloudAverage}%
+        </h2>
+        <h2>Avg Temp for the next 5 days: {this.props.weather.tempAverage}</h2>
+        <h2>Snow: {this.props.weather.snow}</h2>
+        <h2>Rain: {this.props.weather.rain}</h2>
       </div>
     )
   }
@@ -32,7 +38,8 @@ class Test extends React.Component {
  */
 const mapState = state => {
   return {
-    location: state.location
+    location: state.location,
+    weather: state.weather
   }
 }
 
@@ -40,6 +47,9 @@ const mapDispatch = dispatch => {
   return {
     getLocationThunk() {
       dispatch(getLocationThunk())
+    },
+    getWeatherThunk() {
+      dispatch(getWeatherThunk())
     }
   }
 }

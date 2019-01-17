@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const ipstack = require('ipstack')
+const request = require('request')
 
 module.exports = router
 
@@ -20,8 +21,4 @@ router.get('/', async (req, res, next) => {
   } catch (err) {
     next(err)
   }
-})
-
-router.get('https://api.weather.gov/points/', async (req, res, next) => {
-  console.log(res)
 })
