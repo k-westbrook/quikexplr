@@ -29,6 +29,7 @@ export const getWeatherThunk = () => async dispatch => {
       city: res.data.city,
       country: res.data.country_code
     })
+    console.log('THUNK', weather)
 
     const fiveDayForecast = weather.data.list
     const weatherDataCompressed = {
