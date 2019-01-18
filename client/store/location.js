@@ -40,7 +40,13 @@ export const getLocationThunk = () => async dispatch => {
     }
 
     const chosenCityCoord = getCity(attractionArr[0])
-    // const chosenCityName = await axios.post('/api/location/chosenCity', { lat: chosenCityCoord.latitude, long: chosenCityCoord.longitude });
+
+    const restaurantsResponse = await axios.post('/api/location/restaurants', {
+      lat: chosenCityCoord.latitude,
+      long: chosenCityCoord.longitude
+    })
+    const restaurants = restaurantsResponse.data.businesses
+
     const attractionAddress = attractionArr[0].vicinity
     let findIndexStart = attractionAddress.indexOf('>')
     let findIndexEnd = attractionAddress.indexOf(',')
@@ -58,9 +64,11 @@ export const getLocationThunk = () => async dispatch => {
       coordinates: chosenCityCoord,
       name: chosenCityName,
       state: chosenStateName,
-      attractions: attractionArr
+      attractions: attractionArr,
+      restaurants
     }
-    console.log(res.data)
+
+    console.log(chosenDestination, 'CHOSEN')
 
     dispatch(getDestination(chosenDestination))
   } catch (err) {
@@ -74,7 +82,6 @@ export const getLocationThunk = () => async dispatch => {
 export default function(state = location, action) {
   switch (action.type) {
     case GET_LOCATION:
-      console.log(action.userLocation)
       return {...state, userLocation: action.userLocation}
     case GET_DESTINATION:
       return {...state, chosenDestination: action.chosenDestination}

@@ -31,7 +31,6 @@ export const getWeatherThunk = () => async dispatch => {
     })
 
     const fiveDayForecast = weather.data.list
-    console.log(fiveDayForecast)
     const weatherDataCompressed = {
       clearAverage: getClearAverage(fiveDayForecast),
       tempAverage: getTempAverage(fiveDayForecast),

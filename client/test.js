@@ -14,6 +14,11 @@ class Test extends React.Component {
     this.props.getWeatherThunk()
   }
   render() {
+    let restaurant = []
+    if (this.props.restaurants) {
+      restaurant = this.props.restaurants
+    }
+
     return (
       <div>
         <h1>Test</h1>
@@ -44,10 +49,18 @@ class Test extends React.Component {
         {this.props.weather.snowAverage.pleasantWinter && (
           <h3>Chance for a pleasant light snow</h3>
         )}
-        <h2>You might want to try out: </h2>
         <h2>
-          {this.props.chosenLocation.name}, {this.props.chosenLocation.state}
+          You might want to try out: {this.props.chosenLocation.name},{' '}
+          {this.props.chosenLocation.state}
         </h2>
+        {restaurant.map(element => {
+          return (
+            <a href={element.url} key={element.id}>
+              {element.name}
+            </a>
+          )
+        })}
+        {/* <h2>Try this restaurant: {this.props.chosenLocation.restaurants[0].name}</h2> */}
       </div>
     )
   }
@@ -59,6 +72,7 @@ const mapState = state => {
   return {
     location: state.location.userLocation,
     chosenLocation: state.location.chosenDestination,
+    restaurants: state.location.chosenDestination.restaurants,
     weather: state.weather
   }
 }

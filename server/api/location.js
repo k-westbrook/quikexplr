@@ -1,29 +1,23 @@
 const router = require('express').Router()
 const ipstack = require('ipstack')
 const request = require('request')
-// const NodeGeocoder = require('node-geocoder');
-
-// const options = {
-//   provider: 'MapQuest',
-
-//   httpAdapter: 'https',
-//   apiKey: 'process.env.MAP_QUEST_KEY'
-// };
-
-// const geocoder = NodeGeocoder(options);
 
 module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
     const clientIP = req.clientInfo.ip
-    await ipstack(clientIP, process.env.IPSTACK_KEY, (err, response) => {
-      try {
-        res.json(response)
-      } catch (error) {
-        next(err)
+    await ipstack(
+      '172.254.159.106',
+      process.env.IPSTACK_KEY,
+      (err, response) => {
+        try {
+          res.json(response)
+        } catch (error) {
+          next(err)
+        }
       }
-    })
+    )
   } catch (err) {
     next(err)
   }
@@ -48,7 +42,6 @@ router.post('/cities', async (req, res, next) => {
       if (err) {
         console.log(err)
       } else {
-        console.log(body)
         const citiesList = JSON.parse(body)
 
         res.json(citiesList)
@@ -59,14 +52,28 @@ router.post('/cities', async (req, res, next) => {
   }
 })
 
-// router.post('/chosenCity', async (req, res, next) => {
-//   try {
-//     const { lat, long } = req.body
+router.post('/restaurants', async (req, res, next) => {
+  try {
+    const {lat, long} = req.body
 
-//     const cityName = await geocoder.reverse({ lat, long })
-//     res.json(cityName)
-//   } catch (err) {
-//     next(err)
-//   }
+    let url = `https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${long}&term=restaurant&sort_by=rating`
 
-// })
+    const options = {
+      url: url,
+      headers: {
+        Authorization: `Bearer ${process.env.YELP_API}`
+      }
+    }
+    request(options, function(err, response, body) {
+      if (err) {
+        console.log(err)
+      } else {
+        const restaurants = JSON.parse(body)
+
+        res.json(restaurants)
+      }
+    })
+  } catch (err) {
+    next(err)
+  }
+})
