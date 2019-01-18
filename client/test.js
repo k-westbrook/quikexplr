@@ -55,9 +55,9 @@ class Test extends React.Component {
         </h2>
         {restaurant.map(element => {
           return (
-            <a href={element.url} key={element.id}>
-              {element.name}
-            </a>
+            <div key={element.id}>
+              <a href={element.url}>{element.name}</a>
+            </div>
           )
         })}
         {/* <h2>Try this restaurant: {this.props.chosenLocation.restaurants[0].name}</h2> */}
