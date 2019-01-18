@@ -1,28 +1,68 @@
 import axios from 'axios'
-import history from '../history'
+import {getCity} from './destinationUtils'
+import {DH_CHECK_P_NOT_SAFE_PRIME} from 'constants'
 
 /**
  * ACTION TYPES
  */
 const GET_LOCATION = 'GET_LOCATION'
+const GET_DESTINATION = 'GET_DESTINATION'
 
 /**
  * INITIAL STATE
  */
-const userLocation = {}
+const location = {
+  userLocation: {},
+  chosenDestination: {}
+}
 
 /**
  * ACTION CREATORS
  */
-const getLocation = location => ({type: GET_LOCATION, location})
-
+const getLocation = userLocation => ({type: GET_LOCATION, userLocation})
+const getDestination = chosenDestination => ({
+  type: GET_DESTINATION,
+  chosenDestination
+})
 /**
  * THUNK CREATORS
  */
 export const getLocationThunk = () => async dispatch => {
   try {
     const res = await axios.get('/api/location')
-    dispatch(getLocation(res.data || userLocation))
+    const lat = res.data.latitude
+    const long = res.data.longitude
+    const cities = await axios.post('api/location/cities', {lat, long})
+
+    const attractionArr = cities.data.results.items
+    if (attractionArr.length === 0) {
+      dispatch(getLocation(res.data))
+    }
+
+    const chosenCityCoord = getCity(attractionArr[0])
+    // const chosenCityName = await axios.post('/api/location/chosenCity', { lat: chosenCityCoord.latitude, long: chosenCityCoord.longitude });
+    const attractionAddress = attractionArr[0].vicinity
+    let findIndexStart = attractionAddress.indexOf('>')
+    let findIndexEnd = attractionAddress.indexOf(',')
+
+    const chosenCityName = attractionAddress.slice(
+      findIndexStart + 1,
+      findIndexEnd
+    )
+    const chosenStateName = attractionAddress.slice(
+      findIndexEnd + 2,
+      findIndexEnd + 4
+    )
+
+    const chosenDestination = {
+      coordinates: chosenCityCoord,
+      name: chosenCityName,
+      state: chosenStateName,
+      attractions: attractionArr
+    }
+    console.log(res.data)
+    dispatch(getLocation(res.data))
+    dispatch(getDestination(chosenDestination))
   } catch (err) {
     console.error(err)
   }
@@ -31,10 +71,13 @@ export const getLocationThunk = () => async dispatch => {
 /**
  * REDUCER
  */
-export default function(state = userLocation, action) {
+export default function(state = location, action) {
   switch (action.type) {
     case GET_LOCATION:
-      return action.location
+      console.log(action.userLocation)
+      return {...state, userLocation: action.userLocation}
+    case GET_DESTINATION:
+      return {...state, chosenDestination: action.chosenDestination}
     default:
       return state
   }

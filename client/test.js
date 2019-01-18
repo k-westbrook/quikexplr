@@ -21,7 +21,8 @@ class Test extends React.Component {
           Test Button
         </button>
         <h2>
-          Your location: {this.props.location.city} {this.props.location.state}{' '}
+          Your location: {this.props.location.city}{' '}
+          {this.props.location.region_code}
         </h2>
         <h2>Avg Chance of Clear Skies {this.props.weather.clearAverage}%</h2>
         <h2>Avg Temp for the next 5 days: {this.props.weather.tempAverage}</h2>
@@ -43,6 +44,10 @@ class Test extends React.Component {
         {this.props.weather.snowAverage.pleasantWinter && (
           <h3>Chance for a pleasant light snow</h3>
         )}
+        <h2>You might want to try out: </h2>
+        <h2>
+          {this.props.chosenLocation.name}, {this.props.chosenLocation.state}
+        </h2>
       </div>
     )
   }
@@ -52,7 +57,8 @@ class Test extends React.Component {
  */
 const mapState = state => {
   return {
-    location: state.location,
+    location: state.location.userLocation,
+    chosenLocation: state.location.chosenDestination,
     weather: state.weather
   }
 }
