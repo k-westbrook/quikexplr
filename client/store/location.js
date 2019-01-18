@@ -33,7 +33,7 @@ export const getLocationThunk = () => async dispatch => {
     const lat = res.data.latitude
     const long = res.data.longitude
     const cities = await axios.post('api/location/cities', {lat, long})
-
+    dispatch(getLocation(res.data))
     const attractionArr = cities.data.results.items
     if (attractionArr.length === 0) {
       dispatch(getLocation(res.data))
@@ -61,7 +61,7 @@ export const getLocationThunk = () => async dispatch => {
       attractions: attractionArr
     }
     console.log(res.data)
-    dispatch(getLocation(res.data))
+
     dispatch(getDestination(chosenDestination))
   } catch (err) {
     console.error(err)
