@@ -1,21 +1,27 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {MainForm} from './main-form'
 
 /**
  * COMPONENT
  */
 export const UserHome = props => {
-  const {email, classes} = props
+  const {email} = props
 
   return (
-    <div className="home-container">
-      <img
-        src="https://res.cloudinary.com/dmp2crnzz/image/upload/v1547869004/static/quik.jpg"
-        className="background-home"
-      />
+    <div>
+      <MainForm />
       <div className="user-box">
-        <h3 className="title-home">Welcome {email}</h3>
+        <h3 className="title-home">Welcome {email}!</h3>
+        <div className="options-container">
+          <div>
+            <p>My Trips</p>
+          </div>
+          <div>
+            <p>My Profile</p>
+          </div>
+        </div>
       </div>
     </div>
   )
