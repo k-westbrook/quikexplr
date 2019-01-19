@@ -8,7 +8,17 @@ import {connect} from 'react-redux'
 export const UserHome = props => {
   const {email, classes} = props
 
-  return <div />
+  return (
+    <div className="home-container">
+      <img
+        src="https://res.cloudinary.com/dmp2crnzz/image/upload/v1547869004/static/quik.jpg"
+        className="background-home"
+      />
+      <div className="user-box">
+        <h3 className="title-home">Welcome {email}</h3>
+      </div>
+    </div>
+  )
 }
 
 /**
