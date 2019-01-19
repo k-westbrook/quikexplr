@@ -13,13 +13,13 @@ const styles = () => ({
   root: {
     flexGrow: 1
   },
-  rooLink: {
-    flexGrow: 1
-  },
   links: {
     padding: '.7em',
     fontFamily: 'Bree Serif',
     fontSize: '1.5rem'
+  },
+  nav: {
+    marginEnd: '2em'
   }
 })
 
@@ -28,49 +28,33 @@ class Navbar extends React.Component {
     const {handleClick, isLoggedIn, classes} = this.props
     return (
       <div>
-        <AppBar position="static" color="secondary">
+        <AppBar position="static" color="secondary" className={classes.root}>
           <Toolbar className={classes.root}>
-            <Typography variant="h4" color="primary" className={classes.root}>
+            <Typography
+              href="/home"
+              variant="h4"
+              color="primary"
+              className={classes.root}
+            >
               QuikExplr
             </Typography>
             {isLoggedIn ? (
-              <div>
-                <Link
-                  to="/home"
-                  color="primary"
-                  className={classes.links}
-                  variant="inherit"
-                >
-                  My Home
-                </Link>
-                <Link
-                  to="/login"
-                  color="primary"
-                  className={classes.links}
-                  onClick={handleClick}
-                  variant="inherit"
-                >
+              <div display="flex">
+                <Button href="/home" color="inherit" className="links">
+                  Home
+                </Button>
+                <Button color="inherit" onClick={handleClick}>
                   Logout
-                </Link>
+                </Button>
               </div>
             ) : (
-              <div>
-                <Link
-                  to="/login"
-                  color="primary"
-                  className={classes.links}
-                  variant="inherit"
-                >
+              <div className="nav">
+                <Button href="/login" color="inherit" className="links">
                   Login
-                </Link>
-                <Link
-                  to="/signup"
-                  color="primary"
-                  className={classes.links}
-                  variant="inherit"
-                >
+                </Button>
+                <Button href="/signup" color="inherit">
                   Sign Up
-                </Link>
+                </Button>
               </div>
             )}
           </Toolbar>

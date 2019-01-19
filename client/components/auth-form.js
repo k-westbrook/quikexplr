@@ -68,7 +68,7 @@ const AuthForm = props => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          {name}
+          {displayName}
         </Typography>
         <form className={classes.form} name={name} onSubmit={handleSubmit}>
           <FormControl margin="normal" required fullWidth>
