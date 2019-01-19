@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {MainForm} from './main-form'
 
 /**
  * COMPONENT
@@ -10,7 +11,18 @@ export const UserHome = props => {
 
   return (
     <div>
-      <h3>Welcome, {email}</h3>
+      <MainForm />
+      <div className="user-box">
+        <h3 className="title-home">Welcome {email}!</h3>
+        <div className="options-container">
+          <div>
+            <p>My Trips</p>
+          </div>
+          <div>
+            <p>My Profile</p>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

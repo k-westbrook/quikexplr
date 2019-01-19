@@ -7,6 +7,7 @@ const likelihoodPrecipObj = {
 
 export const getClearAverage = weatherArray => {
   let clearArr = []
+  console.log(weatherArray, 'MADE IT')
   weatherArray.forEach(timePeriod => {
     let weatherCode = timePeriod.weather[0].id
 
