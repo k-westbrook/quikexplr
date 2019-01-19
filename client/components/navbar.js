@@ -11,12 +11,13 @@ import Button from '@material-ui/core/Button'
 
 const styles = () => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    fontFamily: 'Fugaz One',
+    fontSize: '1.5em'
   },
   links: {
     padding: '.7em',
-    fontFamily: 'Bree Serif',
-    fontSize: '1.5rem'
+    fontFamily: 'Bree Serif'
   },
   nav: {
     marginEnd: '2em'
@@ -40,19 +41,19 @@ class Navbar extends React.Component {
             </Typography>
             {isLoggedIn ? (
               <div display="flex">
-                <Button href="/home" color="inherit" className="links">
+                <Button href="/home" color="primary" className="links">
                   Home
                 </Button>
-                <Button color="inherit" onClick={handleClick}>
+                <Button color="primary" onClick={handleClick}>
                   Logout
                 </Button>
               </div>
             ) : (
               <div className="nav">
-                <Button href="/login" color="inherit" className="links">
+                <Button href="/login" color="primary" className="links">
                   Login
                 </Button>
-                <Button href="/signup" color="inherit">
+                <Button href="/signup" color="primary">
                   Sign Up
                 </Button>
               </div>

@@ -2,7 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
-import TextField from '@material-ui/core/Input'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
@@ -41,6 +40,16 @@ const styles = theme => ({
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
       .spacing.unit * 3}px`
   },
+  mainPageTitle: {
+    marginTop: theme.spacing.unit * 6,
+    display: 'flex',
+    fontFamiy: 'Fugaz One',
+    backgroundColor: '#00000',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 2}px ${theme
+      .spacing.unit * 2}px`
+  },
   avatar: {
     margin: theme.spacing.unit,
     backgroundColor: theme.palette.secondary.main
@@ -63,6 +72,15 @@ const AuthForm = props => {
   return (
     <main className={classes.main}>
       <CssBaseline />
+      <div className={classes.mainPageTitle}>
+        <Typography variant="h4" color="secondary">
+          Welcome to QuikExplr!
+        </Typography>
+        <Typography variant="h5" color="secondary">
+          Sign in or up to get started!
+        </Typography>
+      </div>
+
       <Paper className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -84,10 +102,7 @@ const AuthForm = props => {
               autoComplete="current-password"
             />
           </FormControl>
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
+
           <Button
             type="submit"
             fullWidth
@@ -156,29 +171,29 @@ AuthForm.propTypes = {
   error: PropTypes.object
 }
 /*const AuthForm = props => {
-  const { name, displayName, handleSubmit, error } = props
+  const {name, displayName, handleSubmit, error } = props
 
-  return (
+        return (
     <div>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="text" />
+          <form onSubmit={handleSubmit} name={name}>
+            <div>
+              <label htmlFor="email">
+                <small>Email</small>
+              </label>
+              <input name="email" type="text" />
+            </div>
+            <div>
+              <label htmlFor="password">
+                <small>Password</small>
+              </label>
+              <input name="password" type="password" />
+            </div>
+            <div>
+              <button type="submit">{displayName}</button>
+            </div>
+            {error && error.response && <div> {error.response.data} </div>}
+          </form>
+          <a href="/auth/google">{displayName} with Google</a>
         </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-      <a href="/auth/google">{displayName} with Google</a>
-    </div>
-  )
-}*/
+        )
+      }*/

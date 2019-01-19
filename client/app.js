@@ -7,8 +7,8 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 
 const theme = createMuiTheme({
   typography: {
-    useNextVariants: true,
-    fontFamily: 'Fugaz One'
+    useNextVariants: true
+    // fontFamily: `'Fugaz One',Bree Serif`
   },
   palette: {
     primary: {
