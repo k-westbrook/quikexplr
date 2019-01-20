@@ -6,4 +6,5 @@
 export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'
 export {Login, Signup} from './auth-form'
-export {MainForm} from './main-form'
+export {default as MainForm} from './main-form'
+export {default as OptionsBar} from './options-bar'

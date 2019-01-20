@@ -23,3 +23,24 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.put('/consent', async (req, res, next) => {
+  try {
+    const updatedUser = await User.update(
+      {
+        hasConsent: true
+      },
+      {
+        where: {
+          id: req.session.userId
+        },
+        returning: true,
+        plain: true
+      }
+    )
+
+    res.json(updatedUser[1])
+  } catch (err) {
+    next(err)
+  }
+})

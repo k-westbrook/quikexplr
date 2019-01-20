@@ -19,6 +19,11 @@ const User = db.define('user', {
       return () => this.getDataValue('password')
     }
   },
+  hasConsent: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
+  },
   isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
