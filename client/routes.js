@@ -6,6 +6,7 @@ import {Login, Signup, UserHome} from './components'
 import {me} from './store'
 import CreateTripForm from './components/create-trip.js'
 import TripList from './components/trip-list.js'
+import SinglePlace from './components/single-place-view'
 /**
  * COMPONENT
  */
@@ -28,6 +29,7 @@ class Routes extends Component {
             <Route path="/home" component={UserHome} />
             <Route path="/getNewTrip" component={CreateTripForm} />
             <Route path="/myTrips" component={TripList} />
+            <Route path="/newPlace" component={SinglePlace} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

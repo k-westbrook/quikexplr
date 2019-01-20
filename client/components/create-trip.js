@@ -8,6 +8,8 @@ import {OptionsBar} from './options-bar'
 import {Checkbox} from '@material-ui/core'
 import {gotConsent} from '../store/user'
 import {getLocationThunk} from '../store/location'
+import {ChosenCard} from './chosen-card'
+
 /**
  * COMPONENT
  */
@@ -49,10 +51,13 @@ export class CreateTripForm extends React.Component {
                 Let's go!
               </button>
               <p>It looks like you are in {this.props.location.city}</p>
-              <p>
-                Discover a new town: {this.props.chosenLocation.name},{' '}
-                {this.props.chosenLocation.state}
-              </p>
+              {this.props.chosenLocation && (
+                <div>
+                  <Link to="/newPlace">
+                    <ChosenCard chosenLocation={this.props.chosenLocation} />
+                  </Link>
+                </div>
+              )}
             </div>
           )}
         </div>
