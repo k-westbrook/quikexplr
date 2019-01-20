@@ -28,19 +28,20 @@ export class CreateTripForm extends React.Component {
         <div className="user-box">
           <h4 className="title-home">Give me a destination!</h4>
           <OptionsBar />
-
-          <form onSubmit={this.handleConsent}>
-            <div>
-              <label htmlFor="consent">
-                <small>
-                  I understand and give consent for QuikExplr to find my current
-                  location.
-                </small>
-              </label>
-              <input name="consent" type="checkbox" value="1" required />
-            </div>
-            <button type="submit">Submit</button>
-          </form>
+          {!this.props.consent && (
+            <form onSubmit={this.handleConsent}>
+              <div>
+                <label htmlFor="consent">
+                  <small>
+                    I understand and give consent for QuikExplr to find my
+                    current location.
+                  </small>
+                </label>
+                <input name="consent" type="checkbox" value="1" required />
+              </div>
+              <button type="submit">Submit</button>
+            </form>
+          )}
         </div>
       </div>
     )
