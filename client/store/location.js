@@ -68,8 +68,6 @@ export const getLocationThunk = () => async dispatch => {
       restaurants
     }
 
-    console.log(chosenDestination, 'CHOSEN')
-
     dispatch(getDestination(chosenDestination))
   } catch (err) {
     console.error(err)

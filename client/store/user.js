@@ -6,6 +6,7 @@ import history from '../history'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
+const UPDATE_USER = 'UPDATE_USER'
 
 /**
  * INITIAL STATE
@@ -17,6 +18,7 @@ const defaultUser = {}
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
+const updateUser = user => ({type: UPDATE_USER, user})
 
 /**
  * THUNK CREATORS
@@ -57,6 +59,16 @@ export const logout = () => async dispatch => {
   }
 }
 
+export const gotConsent = () => async dispatch => {
+  try {
+    const res = await axios.put('/api/users/consent', {consent: true})
+    console.log(res.data, 'WHAT CAME BACK')
+    dispatch(updateUser(res.data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 /**
  * REDUCER
  */
@@ -64,6 +76,8 @@ export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
       return action.user
+    case UPDATE_USER:
+      return {...state, hasConsent: action.user.hasConsent}
     case REMOVE_USER:
       return defaultUser
     default:

@@ -1,5 +1,6 @@
-mainPage {
-  background-image: 'https://res.cloudinary.com/dmp2crnzz/image/upload/v1547869002/static/quik2.jpg';
+a {
+  text-decoration: none;
+  color: black;
 }
 
 .home-container {
@@ -27,14 +28,28 @@ mainPage {
   border-radius: 1%;
   box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  font-family: 'Roboto';
 }
 
 .title-home {
   top: 0%;
-  justify-items: center;
-  font-family: 'Roboto';
+  text-align: center;
+  font-family: 'Special Elite';
   font-size: 1.5em;
+  text-size-adjust: auto;
 }
 .options-container {
   display: flex;
+}
+.option-choice {
+  flex: 1;
+  border-style: outset;
+  color: white;
+  background-color: #228b22;
+  border-color: white;
+}
+
+.option-text {
+  font-weight: bold;
+  text-align: center;
 }

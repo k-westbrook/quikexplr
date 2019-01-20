@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import {connect} from 'react-redux'
 import {MainForm} from './main-form'
 import {OptionsBar} from './options-bar'
@@ -7,18 +7,17 @@ import {withRouter, Route, Switch} from 'react-router-dom'
 import {Test} from './test.js'
 import {Profile} from './profile.js'
 import {CreateTripForm} from './create-trip.js'
-import {TripList} from './trip-list.js'
+
 /**
  * COMPONENT
  */
-export const UserHome = props => {
-  const {email} = props
+export const TripList = props => {
   console.log(props)
   return (
     <div>
       <MainForm />
       <div className="user-box">
-        <h4 className="title-home">Let's travel {props.email}!</h4>
+        <h4 className="title-home">My old trips!</h4>
         <OptionsBar />
 
         <p>photo</p>
@@ -36,11 +35,4 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState)(UserHome)
-
-/**
- * PROP TYPES
- */
-UserHome.propTypes = {
-  email: PropTypes.string
-}
+export default connect(mapState)(TripList)
