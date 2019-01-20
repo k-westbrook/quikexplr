@@ -132,13 +132,13 @@ router.get('/chosenDestination', async (req, res, next) => {
 
     const restaurants = await Restaurant.findAll({
       where: {
-        id: destinationId
+        destinationId
       }
     })
 
     const attractions = await Attraction.findAll({
       where: {
-        id: destinationId
+        destinationId
       }
     })
 
