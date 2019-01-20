@@ -9,6 +9,7 @@ router.get('/', async (req, res, next) => {
     const clientIP = req.clientInfo.ip
     await ipstack('71.190.247.98', process.env.IPSTACK_KEY, (err, response) => {
       try {
+        req.session.userLocation = response
         res.json(response)
       } catch (error) {
         next(err)
@@ -73,3 +74,25 @@ router.post('/restaurants', async (req, res, next) => {
     next(err)
   }
 })
+
+// router.post('/distance/', async (req, res, next) => {
+//   try {
+//     const userLocation = req.session.userLocation;
+//     const userLat = userLocation.latitude;
+//     const userLong = userLocation.longitude;
+//     const { chosenLat, chosenLong } = req.body;
+
+//     const url = `https://route.api.here.com/routing/7.2/calculateroute.json?app_id=${process.env.HERE_APP_ID}&app_code=${process.env.HERE_APP_CODE}&waypoint0=geo!${userLat},${userLong}&waypoint1=geo!${chosenLat},${chosenLong}&mode=fastest;car;traffic:disabled`
+//     request(url, function (err, response, body) {
+//       if (err) {
+//         console.log(err)
+//       } else {
+//         const distanceInfo = JSON.parse(body)
+
+//         res.json(distanceInfo)
+//       }
+//     })
+//   } catch (err) {
+//     next(err)
+//   }
+// })

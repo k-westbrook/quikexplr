@@ -53,3 +53,57 @@ a {
   font-weight: bold;
   text-align: center;
 }
+
+.chosen-box {
+  display: flex;
+  margin-top: 2em;
+  width: 50%;
+  height: 30vh;
+  border-style: groove;
+  box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.chosen-info {
+  flex: 1;
+  flex-wrap: wrap;
+  padding: 1em;
+}
+
+.chosen-img {
+  flex: 1;
+}
+
+.chosen-image {
+  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+  padding-top: 35%;
+  padding-bottom: 35%;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.left-view {
+  flex: 1;
+  background-color: blue;
+}
+
+.right-view {
+  display: flex;
+  flex: 1;
+  background-color: blueviolet;
+  padding: 1em;
+}
+
+.single-view-box {
+  display: flex;
+}
+
+.rest-box {
+  flex: 1;
+}
+
+.attraction-box {
+  flex: 1;
+}

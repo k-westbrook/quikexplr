@@ -59,6 +59,11 @@ export const getLocationThunk = () => async dispatch => {
       findIndexEnd + 2,
       findIndexEnd + 4
     )
+    // const distanceInfo = await axios.post('/api/location/distance/', {
+    //   chosenLat: chosenCityCoord.latitude,
+    //   chosenLong: chosenCityCoord.longitude
+    // });
+    // const distance = distanceInfo.data;
 
     const chosenDestination = {
       coordinates: chosenCityCoord,
