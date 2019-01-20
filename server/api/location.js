@@ -33,7 +33,7 @@ router.post('/cities', async (req, res, next) => {
     let url = `https://places.cit.api.here.com/places/v1/discover/around?&app_id=${
       process.env.HERE_APP_ID
     }&app_code=${process.env.HERE_APP_CODE}&in=${lat + newLat},${long +
-      newLong};r=20000&cat=outdoor-recreation,leisure,landmark-attraction&drilldown=true&size=10`
+      newLong};r=20000&cat=outdoor-recreation,leisure,landmark-attraction&drilldown=true&size=5`
 
     request(url, function(err, response, body) {
       if (err) {
@@ -53,7 +53,7 @@ router.post('/restaurants', async (req, res, next) => {
   try {
     const {lat, long} = req.body
 
-    let url = `https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${long}&term=restaurant&sort_by=rating`
+    let url = `https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${long}&term=restaurant&sort_by=rating&limit=5`
 
     const options = {
       url: url,
