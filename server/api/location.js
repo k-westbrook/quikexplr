@@ -8,7 +8,7 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const clientIP = req.clientInfo.ip
-    await ipstack('71.190.247.98', process.env.IPSTACK_KEY, (err, response) => {
+    await ipstack(clientIP, process.env.IPSTACK_KEY, (err, response) => {
       try {
         req.session.userLocation = response
 
