@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const ipstack = require('ipstack')
 const request = require('request')
+const {Destination, Attraction, Restaurant} = require('../db/models')
 
 module.exports = router
 
@@ -70,6 +71,44 @@ router.post('/restaurants', async (req, res, next) => {
         res.json(restaurants)
       }
     })
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.post('/addDestination/', async (req, res, next) => {
+  try {
+    const {coordinates, name, state, attractions, restaurants} = req.body
+
+    const newDestination = await Destination.create({
+      latitude: coordinates.latitude,
+      longitude: coordinates.longitude,
+      name,
+      state,
+      userId: req.session.userId
+    })
+
+    for (let i = 0; i < attractions.length; i++) {
+      await Attraction.create({
+        title: attractions[i].title,
+        latitude: attractions[i].position[0],
+        longitude: attractions[i].position[1],
+        destinationId: newDestination.id
+      })
+    }
+
+    for (let i = 0; i < restaurants.length; i++) {
+      await Restaurant.create({
+        name: restaurants[i].name,
+        latitude: restaurants[i].coordinates.latitude,
+        longitude: restaurants[i].coordinates.longitude,
+        rating: restaurants[i].rating,
+        url: restaurants[i].url,
+        destinationId: newDestination.id
+      })
+    }
+
+    res.sendStatus(201)
   } catch (err) {
     next(err)
   }

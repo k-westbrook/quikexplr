@@ -12,6 +12,9 @@ const Restaurant = db.define('restaurant', {
   longitude: {
     type: Sequelize.FLOAT
   },
+  rating: {
+    type: Sequelize.FLOAT
+  },
   categories: {
     type: Sequelize.ARRAY(Sequelize.STRING)
   },

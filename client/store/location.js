@@ -37,6 +37,7 @@ export const getLocationThunk = () => async dispatch => {
     let cities = await axios.post('api/location/cities', {lat, long})
     dispatch(getLocation(res.data))
     let attractionArr = cities.data.results.items
+    console.log(attractionArr)
     while (attractionArr.length === 0 && attempts < 5) {
       console.log('there was no match')
       cities = await axios.post('api/location/cities', {lat, long})
@@ -60,6 +61,7 @@ export const getLocationThunk = () => async dispatch => {
       long: chosenCityCoord.longitude
     })
     const restaurants = restaurantsResponse.data.businesses
+
     if (!sameCity) {
       const attractionAddress = attractionArr[0].vicinity
       let findIndexStart = attractionAddress.indexOf('>')
@@ -70,16 +72,19 @@ export const getLocationThunk = () => async dispatch => {
         findIndexEnd + 2,
         findIndexEnd + 4
       )
+      if (
+        chosenCityName === res.data.city &&
+        chosenStateName === res.data.region_name
+      ) {
+        attractionArr = []
+        chosenCityName = res.data.city
+        chosenStateName = res.data.region_name
+      }
     } else {
       attractionArr = []
       chosenCityName = res.data.city
       chosenStateName = res.data.region_name
     }
-    // const distanceInfo = await axios.post('/api/location/distance/', {
-    //   chosenLat: chosenCityCoord.latitude,
-    //   chosenLong: chosenCityCoord.longitude
-    // });
-    // const distance = distanceInfo.data;
 
     const chosenDestination = {
       coordinates: chosenCityCoord,
@@ -88,6 +93,7 @@ export const getLocationThunk = () => async dispatch => {
       attractions: attractionArr,
       restaurants
     }
+    await axios.post('/api/location/addDestination/', chosenDestination)
 
     dispatch(getDestination(chosenDestination))
   } catch (err) {

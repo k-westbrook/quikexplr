@@ -1,16 +1,16 @@
 const User = require('./user')
-const Desination = require('./destination')
+const Destination = require('./destination')
 const Restaurant = require('./restaurant')
 const Attraction = require('./attraction')
 
-User.hasMany(Desination)
+User.hasMany(Destination)
 
-Desination.hasMany(Restaurant)
-Desination.hasMany(Attraction)
+Destination.hasMany(Restaurant)
+Destination.hasMany(Attraction)
 
 module.exports = {
   User,
-  Desination,
+  Destination,
   Restaurant,
   Attraction
 }

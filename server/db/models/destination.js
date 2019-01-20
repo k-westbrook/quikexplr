@@ -11,8 +11,7 @@ const Destination = db.define('destination', {
     allowNull: false
   },
   country: {
-    type: Sequelize.STRING,
-    allowNull: false
+    type: Sequelize.STRING
   },
   latitude: {
     type: Sequelize.FLOAT,
