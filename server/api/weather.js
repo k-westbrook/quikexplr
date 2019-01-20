@@ -5,10 +5,10 @@ const request = require('request')
 module.exports = router
 
 router.post('/', async (req, res, next) => {
-  const {city, country_code} = req.body
+  const {lat, long} = req.body
 
   let apiKey = process.env.OPENWEATHER_KEY
-  let url = `http://api.openweathermap.org/data/2.5/forecast?q=${city},${country_code}&units=imperial&appid=${apiKey}`
+  let url = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&units=imperial&appid=${apiKey}`
   request(url, function(err, response, body) {
     if (err) {
       console.log(err)

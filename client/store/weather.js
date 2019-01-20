@@ -22,14 +22,14 @@ const getWeather = weather => ({type: GET_WEATHER, weather})
 /**
  * THUNK CREATORS
  */
-export const getWeatherThunk = () => async dispatch => {
+export const getWeatherThunk = (lat, long) => async dispatch => {
   try {
-    const res = await axios.get('/api/location')
+    console.log(lat, long)
     const weather = await axios.post(`/api/weather`, {
-      city: res.data.city,
-      country: res.data.country_code
+      lat,
+      long
     })
-    console.log('THUNK', weather)
+    console.log('THUNK', weather.data)
 
     const fiveDayForecast = weather.data.list
     const weatherDataCompressed = {

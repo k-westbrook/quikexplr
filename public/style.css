@@ -86,20 +86,23 @@ a {
 
 .left-view {
   flex: 1;
-  background-color: blue;
+  padding: 1em;
+  border-style: solid;
 }
 
 .right-view {
   display: flex;
   flex: 1;
-  background-color: blueviolet;
   padding: 1em;
   height: 100%;
+  border-style: solid;
+  flex-direction: column;
 }
 
 .single-view-box {
   display: flex;
   height: 70%;
+  font-family: 'Roboto';
 }
 
 .rest-box {

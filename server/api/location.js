@@ -149,7 +149,7 @@ router.get('/chosenDestination', async (req, res, next) => {
       attractions,
       restaurants
     }
-    console.log('__________THIS IS CHONSE', chosenDestination)
+
     res.json(chosenDestination)
   } catch (err) {
     next(err)

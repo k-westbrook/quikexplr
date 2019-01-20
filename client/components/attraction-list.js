@@ -5,7 +5,7 @@ export const AttractionList = props => {
     <div>
       <ul>
         {props.attractions.map(attraction => {
-          return <li key={attraction.id}>{attraction.name}</li>
+          return <li key={attraction.id}>{attraction.title}</li>
         })}
       </ul>
     </div>
