@@ -7,6 +7,7 @@ import {MainForm} from './main-form'
 import {OptionsBar} from './options-bar'
 import {Checkbox} from '@material-ui/core'
 import {gotConsent} from '../store/user'
+import {getLocationThunk} from '../store/location'
 /**
  * COMPONENT
  */
@@ -28,7 +29,7 @@ export class CreateTripForm extends React.Component {
         <div className="user-box">
           <h4 className="title-home">Give me a destination!</h4>
           <OptionsBar />
-          {!this.props.consent && (
+          {!this.props.consent ? (
             <form onSubmit={this.handleConsent}>
               <div>
                 <label htmlFor="consent">
@@ -41,6 +42,18 @@ export class CreateTripForm extends React.Component {
               </div>
               <button type="submit">Submit</button>
             </form>
+          ) : (
+            <div>
+              <button type="submit" onClick={this.props.getLocation}>
+                {' '}
+                Let's go!
+              </button>
+              <p>It looks like you are in {this.props.location.city}</p>
+              <p>
+                Discover a new town: {this.props.chosenLocation.name},{' '}
+                {this.props.chosenLocation.state}
+              </p>
+            </div>
           )}
         </div>
       </div>
@@ -54,12 +67,15 @@ export class CreateTripForm extends React.Component {
 const mapState = state => {
   return {
     email: state.user.email,
-    consent: state.user.hasConsent
+    consent: state.user.hasConsent,
+    location: state.location.userLocation,
+    chosenLocation: state.location.chosenDestination
   }
 }
 const mapDispatch = dispatch => {
   return {
-    gotConsent: () => dispatch(gotConsent())
+    gotConsent: () => dispatch(gotConsent()),
+    getLocation: () => dispatch(getLocationThunk())
   }
 }
 
