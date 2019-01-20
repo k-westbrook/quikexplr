@@ -9,17 +9,16 @@ import {Profile} from './profile.js'
 import {CreateTripForm} from './create-trip.js'
 import {RestaurantList} from './restaurant-list'
 import {AttractionList} from './attraction-list'
-import {getChosenLocationThunk} from '../store/location'
+import {getChosenDestinationThunk} from '../store/location'
 /**
  * COMPONENT
  */
 export class SinglePlace extends React.Component {
   componentDidMount() {
-    this.props.getGetChosenLocation()
+    this.props.getGetChosenDestination()
   }
 
   render() {
-    console.log(this.props, 'PROPS in the single view')
     return (
       <div>
         {this.props.restaurants && (
@@ -28,7 +27,7 @@ export class SinglePlace extends React.Component {
             <div className="user-box">
               <h3 className="title-home">
                 {' '}
-                Meet {this.props.chosenLocation.name}
+                Meet {this.props.chosenDestination.name}
               </h3>
               <OptionsBar />
 
@@ -38,14 +37,14 @@ export class SinglePlace extends React.Component {
                   <div className="rest-box">
                     <h4>Places to Eat</h4>
                     <RestaurantList
-                      restaurants={this.props.chosenLocation.restaurants}
+                      restaurants={this.props.restaurants}
                       className="rest-list"
                     />
                   </div>
                   <div className="attraction-box">
                     <h4>Things to See and Do</h4>
                     <AttractionList
-                      attractions={this.props.chosenLocation.attractions}
+                      attractions={this.props.attractions}
                       className="attraction-list"
                     />
                   </div>
@@ -66,13 +65,12 @@ const mapState = state => {
     restaurants: state.location.chosenDestination.restaurants,
     attractions: state.location.chosenDestination.attractions,
     location: state.location.userLocation,
-    chosenLocation: state.location.chosenDestination
+    chosenDestination: state.location.chosenDestination
   }
 }
 const mapDispatch = dispatch => {
   return {
-    getGetChosenLocation: (lat, long) =>
-      dispatch(getChosenLocationThunk(lat, long))
+    getGetChosenDestination: () => dispatch(getChosenDestinationThunk())
   }
 }
 

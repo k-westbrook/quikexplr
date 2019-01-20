@@ -101,6 +101,16 @@ export const getLocationThunk = () => async dispatch => {
   }
 }
 
+export const getChosenDestinationThunk = () => async dispatch => {
+  try {
+    const chosenDestination = await axios.get('/api/location/chosenDestination')
+    console.log(chosenDestination.data)
+    dispatch(getDestination(chosenDestination.data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 /**
  * REDUCER
  */

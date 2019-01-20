@@ -94,10 +94,12 @@ a {
   flex: 1;
   background-color: blueviolet;
   padding: 1em;
+  height: 100%;
 }
 
 .single-view-box {
   display: flex;
+  height: 70%;
 }
 
 .rest-box {

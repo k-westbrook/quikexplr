@@ -6,7 +6,7 @@ export const RestaurantList = props => {
       <ul>
         {props.restaurants.map(restaurant => {
           return (
-            <li key={restaurant.id} a href={restaurant.url}>
+            <li key={restaurant.id} href={restaurant.url}>
               {restaurant.name}
             </li>
           )

@@ -11,6 +11,7 @@ router.get('/', async (req, res, next) => {
     await ipstack('71.190.247.98', process.env.IPSTACK_KEY, (err, response) => {
       try {
         req.session.userLocation = response
+
         res.json(response)
       } catch (error) {
         next(err)
@@ -107,8 +108,49 @@ router.post('/addDestination/', async (req, res, next) => {
         destinationId: newDestination.id
       })
     }
+    req.session.recentDestinationId = newDestination.id
 
     res.sendStatus(201)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/chosenDestination', async (req, res, next) => {
+  try {
+    const destinationId = req.session.recentDestinationId
+
+    const destinationInfo = await Destination.find({
+      where: {
+        id: destinationId
+      }
+    })
+    const coordinates = {
+      latitude: destinationInfo.latitude,
+      longitude: destinationInfo.longitude
+    }
+
+    const restaurants = await Restaurant.findAll({
+      where: {
+        id: destinationId
+      }
+    })
+
+    const attractions = await Attraction.findAll({
+      where: {
+        id: destinationId
+      }
+    })
+
+    const chosenDestination = {
+      coordinates,
+      name: destinationInfo.name,
+      state: destinationInfo.state,
+      attractions,
+      restaurants
+    }
+    console.log('__________THIS IS CHONSE', chosenDestination)
+    res.json(chosenDestination)
   } catch (err) {
     next(err)
   }
