@@ -120,7 +120,7 @@ export const removeChoiceThunk = () => async dispatch => {
       '/api/location/chosenDestination'
     )
 
-    dispatch(removeChoice(chosenDestination.data))
+    dispatch(removeChoice())
   } catch (error) {
     console.log(error)
   }
