@@ -3,14 +3,11 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {MainForm} from './main-form'
 import {OptionsBar} from './options-bar'
-import {withRouter, Route, Switch} from 'react-router-dom'
-import {Test} from './test.js'
-import {Profile} from './profile.js'
-import {CreateTripForm} from './create-trip.js'
 import {RestaurantList} from './restaurant-list'
 import {AttractionList} from './attraction-list'
-import {getChosenDestinationThunk} from '../store/location'
+import {getChosenDestinationThunk, removeChoiceThunk} from '../store/location'
 import {getWeatherThunk} from '../store/weather'
+import {addTripThunk} from '../store/trip'
 
 /**
  * COMPONENT
@@ -19,6 +16,8 @@ export class SinglePlace extends React.Component {
   constructor() {
     super()
     this.handleClick = this.handleClick.bind(this)
+    this.addTrip = this.addTrip.bind(this)
+    this.returnToCreate = this.returnToCreate.bind(this)
   }
   componentDidMount() {
     this.props.getGetChosenDestination()
@@ -31,7 +30,16 @@ export class SinglePlace extends React.Component {
     )
   }
 
+  addTrip() {
+    this.props.addTrip()
+  }
+
+  returnToCreate() {
+    this.props.returnToCreate(this.props.chosenDestination.id)
+  }
+
   render() {
+    console.log(this.props)
     const {weather} = this.props
     return (
       <div>
@@ -51,7 +59,12 @@ export class SinglePlace extends React.Component {
                     {this.props.weather.clearAverage ? (
                       <div>
                         <h4>Weather Average for next 5 days</h4>
-                        <p>Average Temp: {weather.tempAverage}</p>
+                        <p>
+                          Average Temp: {weather.tempAverage.farenheit} F ({
+                            weather.tempAverage.celsius
+                          }{' '}
+                          C)
+                        </p>
                         <p>
                           Chance of Rain: {weather.rainAverage.rainStrChance}{' '}
                         </p>
@@ -70,8 +83,8 @@ export class SinglePlace extends React.Component {
                         {weather.snowAverage.pleasantWinter && (
                           <div>
                             <p>
-                              Get ready to get cozy! A pleasant snow fall might
-                              occur!
+                              Get ready to get cozy! A pleasant light snow fall
+                              might occur!
                             </p>
                           </div>
                         )}
@@ -83,6 +96,25 @@ export class SinglePlace extends React.Component {
                         </button>
                       </div>
                     )}
+                  </div>
+                  <div className="decision-box">
+                    <p className="decision-blurb">So, what do you think?</p>
+                    <div className="button-box">
+                      <button
+                        className="decision-button"
+                        type="submit"
+                        onClick={this.addTrip}
+                      >
+                        Add to my trips!
+                      </button>
+                      <button
+                        className="decision-button"
+                        type="submit"
+                        onClick={this.returnToCreate}
+                      >
+                        No thank you!
+                      </button>
+                    </div>
                   </div>
                 </div>
                 <div className="right-view">
@@ -121,10 +153,15 @@ const mapState = state => {
     weather: state.weather
   }
 }
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch, ownProps) => {
   return {
     getGetChosenDestination: () => dispatch(getChosenDestinationThunk()),
-    getWeather: (lat, long) => dispatch(getWeatherThunk(lat, long))
+    getWeather: (lat, long) => dispatch(getWeatherThunk(lat, long)),
+    addTrip: () => dispatch(addTripThunk()),
+    returnToCreate: id => {
+      dispatch(removeChoiceThunk(id))
+      ownProps.history.push('/getNewTrip')
+    }
   }
 }
 

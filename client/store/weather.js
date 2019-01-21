@@ -1,5 +1,11 @@
 import axios from 'axios'
-import {getClearAverage, getTempAverage, getRain, getSnow} from './utils'
+import {
+  getClearAverage,
+  getTempAverage,
+  getRain,
+  getSnow,
+  getCelsiusValue
+} from './utils'
 
 /**
  * ACTION TYPES
@@ -32,9 +38,11 @@ export const getWeatherThunk = (lat, long) => async dispatch => {
     console.log('THUNK', weather.data)
 
     const fiveDayForecast = weather.data.list
+    const farenheit = getTempAverage(fiveDayForecast)
+    const celsius = getCelsiusValue(farenheit)
     const weatherDataCompressed = {
       clearAverage: getClearAverage(fiveDayForecast),
-      tempAverage: getTempAverage(fiveDayForecast),
+      tempAverage: {farenheit, celsius},
       rainAverage: getRain(fiveDayForecast),
       snowAverage: getSnow(fiveDayForecast)
     }

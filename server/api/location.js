@@ -8,7 +8,7 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const clientIP = req.clientInfo.ip
-    await ipstack(clientIP, process.env.IPSTACK_KEY, (err, response) => {
+    await ipstack('71.190.247.98', process.env.IPSTACK_KEY, (err, response) => {
       try {
         req.session.userLocation = response
 
@@ -151,6 +151,36 @@ router.get('/chosenDestination', async (req, res, next) => {
     }
 
     res.json(chosenDestination)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.delete('/chosenDestination', async (req, res, next) => {
+  try {
+    const destinationId = req.session.recentDestinationId
+
+    await Destination.destroy({
+      where: {
+        id: destinationId
+      }
+    })
+
+    await Restaurant.destroy({
+      where: {
+        destinationId
+      }
+    })
+
+    await Attraction.destroy({
+      where: {
+        destinationId
+      }
+    })
+
+    req.session.recentDestinationId = null
+
+    res.sendStatus(200)
   } catch (err) {
     next(err)
   }

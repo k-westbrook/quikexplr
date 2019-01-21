@@ -1,13 +1,12 @@
 import axios from 'axios'
 import {getCity} from './destinationUtils'
-import {DH_CHECK_P_NOT_SAFE_PRIME} from 'constants'
 
 /**
  * ACTION TYPES
  */
 const GET_LOCATION = 'GET_LOCATION'
 const GET_DESTINATION = 'GET_DESTINATION'
-
+const REMOVE_CHOICE = 'REMOVE_CHOICE'
 /**
  * INITIAL STATE
  */
@@ -24,7 +23,11 @@ const getDestination = chosenDestination => ({
   type: GET_DESTINATION,
   chosenDestination
 })
+
+export const removeChoice = () => ({type: REMOVE_CHOICE})
 /**
+ *
+ *
  * THUNK CREATORS
  */
 export const getLocationThunk = () => async dispatch => {
@@ -37,7 +40,7 @@ export const getLocationThunk = () => async dispatch => {
     let cities = await axios.post('api/location/cities', {lat, long})
     dispatch(getLocation(res.data))
     let attractionArr = cities.data.results.items
-    console.log(attractionArr)
+
     while (attractionArr.length === 0 && attempts < 5) {
       console.log('there was no match')
       cities = await axios.post('api/location/cities', {lat, long})
@@ -111,6 +114,17 @@ export const getChosenDestinationThunk = () => async dispatch => {
   }
 }
 
+export const removeChoiceThunk = () => async dispatch => {
+  try {
+    const chosenDestination = await axios.delete(
+      '/api/location/chosenDestination'
+    )
+
+    dispatch(removeChoice(chosenDestination.data))
+  } catch (error) {
+    console.log(error)
+  }
+}
 /**
  * REDUCER
  */
@@ -120,6 +134,9 @@ export default function(state = location, action) {
       return {...state, userLocation: action.userLocation}
     case GET_DESTINATION:
       return {...state, chosenDestination: action.chosenDestination}
+    case REMOVE_CHOICE:
+      console.log('MADE IT')
+      return {...state, chosenDestination: {}}
     default:
       return state
   }
