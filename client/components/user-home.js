@@ -13,7 +13,7 @@ import {TripList} from './trip-list.js'
  */
 export const UserHome = props => {
   const {email} = props
-  console.log(props)
+
   return (
     <div>
       <MainForm />

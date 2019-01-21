@@ -8,7 +8,7 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const clientIP = req.clientInfo.ip
-    await ipstack(clientIP, process.env.IPSTACK_KEY, (err, response) => {
+    await ipstack('71.190.247.98', process.env.IPSTACK_KEY, (err, response) => {
       try {
         req.session.userLocation = response
 
@@ -132,13 +132,13 @@ router.get('/chosenDestination', async (req, res, next) => {
 
     const restaurants = await Restaurant.findAll({
       where: {
-        id: destinationId
+        destinationId
       }
     })
 
     const attractions = await Attraction.findAll({
       where: {
-        id: destinationId
+        destinationId
       }
     })
 

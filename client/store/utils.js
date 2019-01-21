@@ -139,3 +139,7 @@ export const getRain = weatherArray => {
   }
   return rainAnalysisObject
 }
+
+export const getCelsiusValue = farenheitValue => {
+  return Math.round((farenheitValue - 32) * (5 / 9))
+}

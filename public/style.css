@@ -58,7 +58,7 @@ a {
   display: flex;
   margin-top: 2em;
   width: 50%;
-  height: 30vh;
+  height: 40vh;
   border-style: groove;
   box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -88,6 +88,9 @@ a {
   flex: 1;
   padding: 1em;
   border-style: solid;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .right-view {
@@ -101,7 +104,7 @@ a {
 
 .single-view-box {
   display: flex;
-  height: 70%;
+  height: 100%;
   font-family: 'Roboto';
 }
 
@@ -111,4 +114,44 @@ a {
 
 .attraction-box {
   flex: 1;
+}
+
+.weather-info {
+  flex: 1;
+  background-color: pink;
+  padding: 1em;
+  flex-wrap: wrap;
+}
+.decision-box {
+  flex: 1;
+  padding: 1em;
+  background-color: aqua;
+  justify-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.button-box {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
+
+.decision-button {
+  margin: 0.5em;
+  flex: 1;
+}
+
+.decision-blurb {
+  flex: 1;
+  text-align: center;
+}
+
+.chosen-box-mini {
+  display: flex;
+  margin-top: 2em;
+  width: 50%;
+  height: 20vh;
+  border-style: groove;
+  box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
