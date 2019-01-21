@@ -63,9 +63,9 @@ a {
 .chosen-box {
   display: flex;
   margin-top: 2em;
-  width: 50%;
   height: 30vh;
-
+  width: 50vh;
+  text-align: center;
   box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -74,6 +74,11 @@ a {
   flex: 1;
   flex-wrap: wrap;
   padding: 1em;
+  height: 100%;
+  width: 100%;
+}
+.specific-info {
+  font-size: 2em;
 }
 
 .chosen-img {
@@ -191,15 +196,6 @@ a {
   font-size: 3vh;
 }
 
-.chosen-box-mini {
-  display: flex;
-  margin-top: 2em;
-  width: 50%;
-  height: 20vh;
-  border-style: groove;
-  box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.2),
-    0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
 .extreme-weather-warning {
   color: red;
 }
@@ -229,10 +225,35 @@ a {
 
 .chosen-card {
   flex: 1;
-  margin-right: 25%;
-  margin-left: 25%;
-  width: 50vw;
 }
 .location-sentence {
   flex: 1;
+  font-size: 1.5em;
+}
+
+.trip-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1vh;
+}
+.list-item {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin: 1vh;
+  height: 10vh;
+  width: 10vw;
+  text-align: center;
+}
+.trip-item {
+  flex: 2;
+}
+
+.trip-remove {
+  flex: 1;
+}
+.trip-instruction {
+  text-align: center;
+  font-size: 5vh;
 }

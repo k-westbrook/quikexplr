@@ -144,7 +144,7 @@ export class SinglePlace extends React.Component {
                       className="rest-list"
                     />
                   </div>
-                  {chosenDestination.sameCity ? (
+                  {!chosenDestination.sameCity ? (
                     <div className="attraction-box">
                       <h4>Things to See and Do</h4>
                       <AttractionList

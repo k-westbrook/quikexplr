@@ -159,7 +159,8 @@ router.get('/chosenDestination', async (req, res, next) => {
       name: destinationInfo.name,
       state: destinationInfo.state,
       attractions,
-      restaurants
+      restaurants,
+      sameCity: destinationInfo.stayCation
     }
 
     res.json(chosenDestination)

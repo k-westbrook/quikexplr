@@ -33,16 +33,26 @@ class TripList extends React.Component {
         <div className="user-box">
           <h4 className="title-home">My old trips!</h4>
           <OptionsBar />
-          {this.props.trips.map(trip => {
-            return (
-              <div key={trip.id}>
-                <ChosenCardMini chosenLocation={trip} />
-                <button type="submit" onClick={() => this.removeTrip(trip.id)}>
-                  XRemove
-                </button>
-              </div>
-            )
-          })}
+          <div className="trip-instruction">
+            <h3>Click on your saved trips for info!</h3>
+          </div>
+          <div className="trip-list">
+            {this.props.trips.map(trip => {
+              return (
+                <div className="list-item" key={trip.id}>
+                  <ChosenCardMini chosenLocation={trip} />
+                  <div className="trip-remove">
+                    <button
+                      type="submit"
+                      onClick={() => this.removeTrip(trip.id)}
+                    >
+                      XRemove
+                    </button>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </div>
     )
