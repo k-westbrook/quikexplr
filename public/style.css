@@ -125,16 +125,21 @@ a {
   background-color: pink;
   padding: 1em;
   flex-wrap: wrap;
+  text-align: center;
 }
 .weather-button {
   display: inline-block;
   border-style: outset;
   color: white;
   background-color: #228b22;
+  font-weight: bold;
   border-color: white;
-  margin-right: 30%;
-  margin-left: 30%;
-  margin-top: 10%;
+
+  width: 10vw;
+  height: 10vh;
+}
+.weather-cat {
+  font-weight: bold;
 }
 
 .decision-box {
@@ -154,11 +159,20 @@ a {
 .decision-button {
   margin: 0.5em;
   flex: 1;
+  border-style: outset;
+  color: white;
+  background-color: #228b22;
+  border-color: white;
+  font-weight: bold;
+}
+.weather-lines {
+  font-size: 2.5vh;
 }
 
 .decision-blurb {
   flex: 1;
   text-align: center;
+  font-size: 3vh;
 }
 
 .chosen-box-mini {
@@ -169,4 +183,7 @@ a {
   border-style: groove;
   box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.extreme-weather-warning {
+  color: red;
 }

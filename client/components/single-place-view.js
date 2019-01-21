@@ -58,30 +58,43 @@ export class SinglePlace extends React.Component {
                     {this.props.weather.clearAverage ? (
                       <div>
                         <h4>Weather Average for next 5 days</h4>
-                        <p>
-                          Average Temp: {weather.tempAverage.farenheit} F ({
+                        <p className="weather-lines">
+                          <span className="weather-cat"> Average Temp: </span>{' '}
+                          {weather.tempAverage.farenheit} F ({
                             weather.tempAverage.celsius
                           }{' '}
                           C)
+                          <br />
+                          <span className="weather-cat">
+                            {' '}
+                            Chance of Rain:
+                          </span>{' '}
+                          {weather.rainAverage.rainStrChance} <br />
+                          <span className="weather-cat">
+                            {' '}
+                            Chance of Snow:
+                          </span>{' '}
+                          {weather.snowAverage.snowStrChance}
+                          <br />
+                          <span className="weather-cat">
+                            {' '}
+                            Clear Skies Percent:{' '}
+                          </span>
+                          {weather.clearAverage}%
                         </p>
-                        <p>
-                          Chance of Rain: {weather.rainAverage.rainStrChance}{' '}
-                        </p>
-                        <p>
-                          Chance of Snow: {weather.snowAverage.snowStrChance}
-                        </p>
-                        <p>Clear Skies Percent: {weather.clearAverage}%</p>
                         {weather.rainAverage.extremeWeatherWarn ||
                           (weather.snowAverage.extremeWeatherWarn && (
                             <div>
-                              Looking for adventure? This place might have some
-                              intense weather conditions in the next few days.
-                              Proceed with caution.
+                              <p className="extreme-weather-warning">
+                                Looking for adventure? This place might have
+                                some intense weather conditions in the next few
+                                days. Proceed with caution.
+                              </p>
                             </div>
                           ))}
                         {weather.snowAverage.pleasantWinter && (
                           <div>
-                            <p>
+                            <p className="pleasant-winter-message">
                               Get ready to get cozy! A pleasant light snow fall
                               might occur!
                             </p>
@@ -90,6 +103,9 @@ export class SinglePlace extends React.Component {
                       </div>
                     ) : (
                       <div>
+                        <h2 className="decision-blurb">
+                          Click button for updated weather!
+                        </h2>
                         <button
                           className="weather-button"
                           type="submit"
@@ -101,14 +117,14 @@ export class SinglePlace extends React.Component {
                     )}
                   </div>
                   <div className="decision-box">
-                    <p className="decision-blurb">So, what do you think?</p>
+                    <h2 className="decision-blurb">So, what do you think?</h2>
                     <div className="button-box">
                       <button
                         className="decision-button"
                         type="submit"
                         onClick={this.addTrip}
                       >
-                        See it in my trips!
+                        Add it to trips!
                       </button>
                       <button
                         className="decision-button"
