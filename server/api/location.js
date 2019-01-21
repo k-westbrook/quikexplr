@@ -156,6 +156,36 @@ router.get('/chosenDestination', async (req, res, next) => {
   }
 })
 
+router.delete('/chosenDestination', async (req, res, next) => {
+  try {
+    const destinationId = req.session.recentDestinationId
+
+    await Destination.destroy({
+      where: {
+        id: destinationId
+      }
+    })
+
+    await Restaurant.destroy({
+      where: {
+        destinationId
+      }
+    })
+
+    await Attraction.destroy({
+      where: {
+        destinationId
+      }
+    })
+
+    req.session.recentDestinationId = null
+
+    res.sendStatus(200)
+  } catch (err) {
+    next(err)
+  }
+})
+
 // router.post('/distance/', async (req, res, next) => {
 //   try {
 //     const userLocation = req.session.userLocation;
