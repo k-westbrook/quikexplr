@@ -1,3 +1,7 @@
+* {
+  font-size: 1vw;
+}
+
 a {
   text-decoration: none;
   color: black;
@@ -122,6 +126,17 @@ a {
   padding: 1em;
   flex-wrap: wrap;
 }
+.weather-button {
+  display: inline-block;
+  border-style: outset;
+  color: white;
+  background-color: #228b22;
+  border-color: white;
+  margin-right: 30%;
+  margin-left: 30%;
+  margin-top: 10%;
+}
+
 .decision-box {
   flex: 1;
   padding: 1em;

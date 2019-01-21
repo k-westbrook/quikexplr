@@ -39,7 +39,7 @@ export class SinglePlace extends React.Component {
   }
 
   render() {
-    const {weather} = this.props
+    const {weather, chosenDestination} = this.props
     return (
       <div>
         {this.props.restaurants && (
@@ -90,7 +90,11 @@ export class SinglePlace extends React.Component {
                       </div>
                     ) : (
                       <div>
-                        <button type="submit" onClick={this.handleClick}>
+                        <button
+                          className="weather-button"
+                          type="submit"
+                          onClick={this.handleClick}
+                        >
                           Get the Weather
                         </button>
                       </div>
@@ -124,13 +128,23 @@ export class SinglePlace extends React.Component {
                       className="rest-list"
                     />
                   </div>
-                  <div className="attraction-box">
-                    <h4>Things to See and Do</h4>
-                    <AttractionList
-                      attractions={this.props.attractions}
-                      className="attraction-list"
-                    />
-                  </div>
+                  {chosenDestination.sameCity ? (
+                    <div className="attraction-box">
+                      <h4>Things to See and Do</h4>
+                      <AttractionList
+                        attractions={this.props.attractions}
+                        className="attraction-list"
+                      />
+                    </div>
+                  ) : (
+                    <div>
+                      <h4>Stay in your town and explore</h4>
+                      <AttractionList
+                        attractions={this.props.attractions}
+                        className="attraction-list"
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
