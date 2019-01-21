@@ -7,6 +7,17 @@ router.get('/addTrip', async (req, res, next) => {
   try {
     const {recentDestinationId} = req.session
 
+    await Destination.update(
+      {
+        userId: req.session.userId
+      },
+      {
+        where: {
+          id: recentDestinationId
+        }
+      }
+    )
+
     const addedTrip = await Destination.find({
       where: {id: recentDestinationId}
     })

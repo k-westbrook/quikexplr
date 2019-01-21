@@ -86,7 +86,7 @@ router.post('/addDestination/', async (req, res, next) => {
       longitude: coordinates.longitude,
       name,
       state,
-      userId: req.session.userId
+      userId: null
     })
 
     for (let i = 0; i < attractions.length; i++) {

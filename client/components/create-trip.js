@@ -48,14 +48,20 @@ export class CreateTripForm extends React.Component {
             <div>
               <button type="submit" onClick={this.props.getLocation}>
                 {' '}
-                Let's go!
+                Find me a place!
               </button>
-              <p>It looks like you are in {this.props.location.city}</p>
-              {this.props.chosenLocation && (
+
+              {this.props.chosenLocation.coordinates && (
                 <div>
-                  <Link to="/newPlace">
-                    <ChosenCard chosenLocation={this.props.chosenLocation} />
-                  </Link>
+                  <p>
+                    It looks like you are in {this.props.location.city},{' '}
+                    {this.props.location.region_name}
+                  </p>
+                  <div>
+                    <Link to="/newPlace">
+                      <ChosenCard chosenLocation={this.props.chosenLocation} />
+                    </Link>
+                  </div>
                 </div>
               )}
             </div>

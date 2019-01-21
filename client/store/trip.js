@@ -1,6 +1,6 @@
 import axios from 'axios'
 import history from '../history'
-
+import {removeChoiceThunk} from '../store/location'
 /**
  * ACTION TYPES
  */
@@ -26,10 +26,11 @@ const addTrip = trip => ({type: ADD_TRIP, trip})
 /**
  * THUNK CREATORS
  */
-export const addTripThunk = () => async dispatch => {
+export const addTripThunk = id => async dispatch => {
   try {
     const res = await axios.get('api/trips/addTrip')
     dispatch(addTrip(res.data))
+    dispatch(removeChoiceThunk(id))
     history.push('/myTrips')
   } catch (err) {
     console.error(err)

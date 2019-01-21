@@ -31,7 +31,7 @@ export class SinglePlace extends React.Component {
   }
 
   addTrip() {
-    this.props.addTrip()
+    this.props.addTrip(this.props.chosenDestination.id)
   }
 
   returnToCreate() {
@@ -39,7 +39,6 @@ export class SinglePlace extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     const {weather} = this.props
     return (
       <div>
@@ -105,7 +104,7 @@ export class SinglePlace extends React.Component {
                         type="submit"
                         onClick={this.addTrip}
                       >
-                        Add to my trips!
+                        See it in my trips!
                       </button>
                       <button
                         className="decision-button"
@@ -157,7 +156,7 @@ const mapDispatch = (dispatch, ownProps) => {
   return {
     getGetChosenDestination: () => dispatch(getChosenDestinationThunk()),
     getWeather: (lat, long) => dispatch(getWeatherThunk(lat, long)),
-    addTrip: () => dispatch(addTripThunk()),
+    addTrip: id => dispatch(addTripThunk(id)),
     returnToCreate: id => {
       dispatch(removeChoiceThunk(id))
       ownProps.history.push('/getNewTrip')

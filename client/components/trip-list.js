@@ -23,7 +23,6 @@ class TripList extends React.Component {
   }
 
   removeTrip(tripId) {
-    console.log(tripId, 'ON F()')
     this.props.removeTrip(tripId)
   }
 
@@ -37,7 +36,6 @@ class TripList extends React.Component {
           {this.props.trips.map(trip => {
             return (
               <div key={trip.id}>
-                <p>{trip.id}</p>
                 <ChosenCardMini chosenLocation={trip} />
                 <button type="submit" onClick={() => this.removeTrip(trip.id)}>
                   XRemove
