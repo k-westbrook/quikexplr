@@ -40,6 +40,7 @@ export const getLocationThunk = () => async dispatch => {
     let cities = await axios.post('api/location/cities', {lat, long})
     dispatch(getLocation(res.data))
     let attractionArr = cities.data.results.items
+    console.log(attractionArr)
 
     while (attractionArr.length === 0 && attempts < 5) {
       console.log('there was no match')
@@ -84,6 +85,7 @@ export const getLocationThunk = () => async dispatch => {
           long
         })
         attractionArr = attractionsData.data.results.items
+
         chosenCityName = res.data.city
         chosenStateName = res.data.region_name
       }
