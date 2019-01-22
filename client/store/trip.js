@@ -42,7 +42,7 @@ export const addTripThunk = () => async dispatch => {
 
 export const getTripListThunk = () => async dispatch => {
   try {
-    const res = await axios.get('api/trips/tripList')
+    const res = await axios.get('/api/trips/tripList')
     dispatch(getTripList(res.data))
   } catch (err) {
     console.error(err)
@@ -58,11 +58,17 @@ export const getTripThunk = tripId => async dispatch => {
   }
 }
 
-export const removeTripThunk = tripId => async dispatch => {
+export const removeTripThunk = trip => async dispatch => {
   try {
-    await axios.put('api/trips/removeTrip', {tripId})
+    const tripId = trip.tripId
+
+    await axios.put('/api/trips/removeTrip', {tripId: tripId})
 
     dispatch(removeTrip(tripId))
+
+    if (trip.singleView) {
+      history.push('/myTrips')
+    }
   } catch (err) {
     console.error(err)
   }
@@ -84,7 +90,7 @@ export default function(state = defaultTripList, action) {
           newArr.push(trip)
         }
       })
-      return {...state, trips: newArr}
+      return {...state, trips: newArr, selectedTrip: {}}
     }
     case GET_TRIP:
       return {...state, selectedTrip: action.trip}

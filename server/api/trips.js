@@ -117,6 +117,7 @@ router.get('/getTrip/:destinationId', async (req, res, next) => {
       })
 
       const chosenDestination = {
+        id: destinationId,
         coordinates,
         name: destinationInfo.name,
         state: destinationInfo.state,
@@ -137,6 +138,7 @@ router.get('/getTrip/:destinationId', async (req, res, next) => {
 router.put('/removeTrip', async (req, res, next) => {
   try {
     const {tripId} = req.body
+    console.log('TRIP ID', tripId)
     const removedTrip = await Destination.destroy({
       where: {id: tripId}
     })

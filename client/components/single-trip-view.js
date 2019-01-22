@@ -5,7 +5,7 @@ import {OptionsBar} from './options-bar'
 import {RestaurantList} from './restaurant-list'
 import {AttractionList} from './attraction-list'
 import {getWeatherThunk} from '../store/weather'
-import {getTripThunk} from '../store/trip'
+import {getTripThunk, removeTripThunk} from '../store/trip'
 
 /**
  * COMPONENT
@@ -16,7 +16,7 @@ export class SingleTrip extends React.Component {
   }
   componentDidMount() {
     const tripId = this.props.match.params.tripId
-    console.log(tripId, 'TRIP ID')
+
     this.props.getTrip(tripId)
   }
 
@@ -26,9 +26,13 @@ export class SingleTrip extends React.Component {
       this.props.trip.coordinates.longitude
     )
   }
+  removeTrip(tripId) {
+    const trip = {tripId, singleView: true}
+    this.props.removeTrip(trip)
+  }
 
   render() {
-    console.log(this.props, 'PROPS')
+    console.log(this.props.trip, 'PROPS')
     const {weather, trip} = this.props
     return (
       <div>
@@ -106,7 +110,11 @@ export class SingleTrip extends React.Component {
                   <div className="decision-box">
                     <h2 className="decision-blurb">So, what do you think?</h2>
                     <div className="button-box">
-                      <button className="decision-button" type="submit">
+                      <button
+                        className="decision-button"
+                        type="submit"
+                        onClick={() => this.removeTrip(trip.id)}
+                      >
                         Remove it from trips
                       </button>
                     </div>
@@ -160,7 +168,8 @@ const mapState = state => {
 const mapDispatch = (dispatch, ownProps) => {
   return {
     getWeather: (lat, long) => dispatch(getWeatherThunk(lat, long)),
-    getTrip: id => dispatch(getTripThunk(id))
+    getTrip: id => dispatch(getTripThunk(id)),
+    removeTrip: trip => dispatch(removeTripThunk(trip))
   }
 }
 

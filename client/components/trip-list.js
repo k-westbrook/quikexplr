@@ -23,7 +23,8 @@ class TripList extends React.Component {
   }
 
   removeTrip(tripId) {
-    this.props.removeTrip(tripId)
+    const trip = {tripId, singleView: false}
+    this.props.removeTrip(trip)
   }
 
   render() {
