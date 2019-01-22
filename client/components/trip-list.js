@@ -3,7 +3,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {MainForm} from './main-form'
 import {OptionsBar} from './options-bar'
-import {withRouter, Route, Switch} from 'react-router-dom'
+import {withRouter, Route, Switch, Link} from 'react-router-dom'
 import {Test} from './test.js'
 import {Profile} from './profile.js'
 import {CreateTripForm} from './create-trip.js'
@@ -41,6 +41,7 @@ class TripList extends React.Component {
               return (
                 <div className="list-item" key={trip.id}>
                   <ChosenCardMini chosenLocation={trip} />
+
                   <div className="trip-remove">
                     <button
                       type="submit"

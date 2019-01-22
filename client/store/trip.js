@@ -8,12 +8,14 @@ import {removeChoice} from '../store/location'
 const ADD_TRIP = 'ADD_TRIP'
 const GET_TRIP_LIST = 'GET_TRIP_LIST'
 const REMOVE_TRIP = 'REMOVE_TRIP'
+const GET_TRIP = 'GET_TRIP'
 
 /**
  * INITIAL STATE
  */
 const defaultTripList = {
-  trips: []
+  trips: [],
+  selectedTrip: {}
 }
 
 /**
@@ -22,6 +24,7 @@ const defaultTripList = {
 const getTripList = trips => ({type: GET_TRIP_LIST, trips})
 const removeTrip = tripId => ({type: REMOVE_TRIP, tripId})
 const addTrip = trip => ({type: ADD_TRIP, trip})
+const getTrip = trip => ({type: GET_TRIP, trip})
 
 /**
  * THUNK CREATORS
@@ -41,6 +44,15 @@ export const getTripListThunk = () => async dispatch => {
   try {
     const res = await axios.get('api/trips/tripList')
     dispatch(getTripList(res.data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+export const getTripThunk = tripId => async dispatch => {
+  try {
+    const res = await axios.get(`/api/trips/getTrip/${tripId}`)
+
+    dispatch(getTrip(res.data))
   } catch (err) {
     console.error(err)
   }
@@ -74,6 +86,8 @@ export default function(state = defaultTripList, action) {
       })
       return {...state, trips: newArr}
     }
+    case GET_TRIP:
+      return {...state, selectedTrip: action.trip}
     default:
       return state
   }
