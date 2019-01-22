@@ -6,7 +6,7 @@ import {OptionsBar} from './options-bar'
 import {RestaurantList} from './restaurant-list'
 import {AttractionList} from './attraction-list'
 import {getChosenDestinationThunk, removeChoiceThunk} from '../store/location'
-import {getWeatherThunk} from '../store/weather'
+import {getWeatherThunk, resetWeather} from '../store/weather'
 import {addTripThunk} from '../store/trip'
 
 /**
@@ -32,10 +32,12 @@ export class SinglePlace extends React.Component {
 
   addTrip() {
     this.props.addTrip(this.props.chosenDestination.id)
+    this.props.resetWeather()
   }
 
   returnToCreate() {
     this.props.returnToCreate(this.props.chosenDestination.id)
+    this.props.resetWeather()
   }
 
   render() {
@@ -186,6 +188,7 @@ const mapDispatch = (dispatch, ownProps) => {
   return {
     getGetChosenDestination: () => dispatch(getChosenDestinationThunk()),
     getWeather: (lat, long) => dispatch(getWeatherThunk(lat, long)),
+    resetWeather: () => dispatch(resetWeather()),
     addTrip: id => dispatch(addTripThunk(id)),
     returnToCreate: id => {
       dispatch(removeChoiceThunk(id))
