@@ -143,7 +143,6 @@ export default function(state = location, action) {
     case GET_DESTINATION:
       return {...state, chosenDestination: action.chosenDestination}
     case REMOVE_CHOICE:
-      console.log('MADE IT')
       return {...state, chosenDestination: {}}
     default:
       return state

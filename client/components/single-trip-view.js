@@ -43,7 +43,6 @@ export class SingleTrip extends React.Component {
   }
 
   render() {
-    console.log(this.props, 'PROPS')
     const {trip} = this.props
     return (
       <div>

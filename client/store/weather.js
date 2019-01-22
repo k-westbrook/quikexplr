@@ -32,12 +32,10 @@ export const resetWeather = () => ({type: RESET_WEATHER})
  */
 export const getWeatherThunk = (lat, long) => async dispatch => {
   try {
-    console.log(lat, long)
     const weather = await axios.post(`/api/weather`, {
       lat,
       long
     })
-    console.log('THUNK', weather.data)
 
     const fiveDayForecast = weather.data.list
     const farenheit = getTempAverage(fiveDayForecast)
