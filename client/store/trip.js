@@ -9,6 +9,7 @@ const ADD_TRIP = 'ADD_TRIP'
 const GET_TRIP_LIST = 'GET_TRIP_LIST'
 const REMOVE_TRIP = 'REMOVE_TRIP'
 const GET_TRIP = 'GET_TRIP'
+const RESET_TRIP = 'RESET_TRIP'
 
 /**
  * INITIAL STATE
@@ -25,6 +26,7 @@ const getTripList = trips => ({type: GET_TRIP_LIST, trips})
 const removeTrip = tripId => ({type: REMOVE_TRIP, tripId})
 const addTrip = trip => ({type: ADD_TRIP, trip})
 const getTrip = trip => ({type: GET_TRIP, trip})
+export const resetTrip = () => ({type: RESET_TRIP})
 
 /**
  * THUNK CREATORS
@@ -94,6 +96,8 @@ export default function(state = defaultTripList, action) {
     }
     case GET_TRIP:
       return {...state, selectedTrip: action.trip}
+    case RESET_TRIP:
+      return {...state, selectedTrip: {}}
     default:
       return state
   }

@@ -1,11 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {withRouter, Route, Switch, Link} from 'react-router-dom'
 import {MainForm} from './main-form'
 import {OptionsBar} from './options-bar'
 import {RestaurantList} from './restaurant-list'
 import {AttractionList} from './attraction-list'
-import {getWeatherThunk} from '../store/weather'
-import {getTripThunk, removeTripThunk} from '../store/trip'
+import {getWeatherThunk, resetWeather} from '../store/weather'
+import {getTripThunk, removeTripThunk, resetTrip} from '../store/trip'
 
 /**
  * COMPONENT
@@ -13,6 +14,10 @@ import {getTripThunk, removeTripThunk} from '../store/trip'
 export class SingleTrip extends React.Component {
   constructor() {
     super()
+
+    this.removeTrip = this.removeTrip.bind(this)
+    this.handleClick = this.handleClick.bind(this)
+    this.returnClick = this.returnClick.bind(this)
   }
   componentDidMount() {
     const tripId = this.props.match.params.tripId
@@ -31,9 +36,15 @@ export class SingleTrip extends React.Component {
     this.props.removeTrip(trip)
   }
 
+  returnClick() {
+    this.props.resetTrip()
+    this.props.resetWeather()
+    this.props.history.goBack()
+  }
+
   render() {
-    console.log(this.props.trip, 'PROPS')
-    const {weather, trip} = this.props
+    console.log(this.props, 'PROPS')
+    const {trip} = this.props
     return (
       <div>
         {this.props.restaurants && (
@@ -51,8 +62,8 @@ export class SingleTrip extends React.Component {
                         <h4>Weather Average for next 5 days</h4>
                         <p className="weather-lines">
                           <span className="weather-cat"> Average Temp: </span>{' '}
-                          {weather.tempAverage.farenheit} F ({
-                            weather.tempAverage.celsius
+                          {this.props.weather.tempAverage.farenheit} F ({
+                            this.props.weather.tempAverage.celsius
                           }{' '}
                           C)
                           <br />
@@ -60,21 +71,22 @@ export class SingleTrip extends React.Component {
                             {' '}
                             Chance of Rain:
                           </span>{' '}
-                          {weather.rainAverage.rainStrChance} <br />
+                          {this.props.weather.rainAverage.rainStrChance} <br />
                           <span className="weather-cat">
                             {' '}
                             Chance of Snow:
                           </span>{' '}
-                          {weather.snowAverage.snowStrChance}
+                          {this.props.weather.snowAverage.snowStrChance}
                           <br />
                           <span className="weather-cat">
                             {' '}
                             Clear Skies Percent:{' '}
                           </span>
-                          {weather.clearAverage}%
+                          {this.props.weather.clearAverage}%
                         </p>
-                        {weather.rainAverage.extremeWeatherWarn ||
-                          (weather.snowAverage.extremeWeatherWarn && (
+                        {this.props.weather.rainAverage.extremeWeatherWarn ||
+                          (this.props.weather.snowAverage
+                            .extremeWeatherWarn && (
                             <div>
                               <p className="extreme-weather-warning">
                                 Looking for adventure? This place might have
@@ -83,7 +95,7 @@ export class SingleTrip extends React.Component {
                               </p>
                             </div>
                           ))}
-                        {weather.snowAverage.pleasantWinter && (
+                        {this.props.weather.snowAverage.pleasantWinter && (
                           <div>
                             <p className="pleasant-winter-message">
                               Get ready to get cozy! A pleasant light snow fall
@@ -113,9 +125,17 @@ export class SingleTrip extends React.Component {
                       <button
                         className="decision-button"
                         type="submit"
+                        onClick={this.returnClick}
+                      >
+                        Return to My Trips
+                      </button>
+
+                      <button
+                        className="decision-button"
+                        type="submit"
                         onClick={() => this.removeTrip(trip.id)}
                       >
-                        Remove it from trips
+                        Remove this from my trips!
                       </button>
                     </div>
                   </div>
@@ -169,7 +189,9 @@ const mapDispatch = (dispatch, ownProps) => {
   return {
     getWeather: (lat, long) => dispatch(getWeatherThunk(lat, long)),
     getTrip: id => dispatch(getTripThunk(id)),
-    removeTrip: trip => dispatch(removeTripThunk(trip))
+    removeTrip: trip => dispatch(removeTripThunk(trip)),
+    resetTrip: () => dispatch(resetTrip()),
+    resetWeather: () => dispatch(resetWeather())
   }
 }
 

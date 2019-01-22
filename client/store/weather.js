@@ -11,6 +11,7 @@ import {
  * ACTION TYPES
  */
 const GET_WEATHER = 'GET_WEATHER'
+const RESET_WEATHER = 'RESET_WEATHER'
 
 /**
  * INITIAL STATE
@@ -24,6 +25,7 @@ const cityWeather = {
  * ACTION CREATORS
  */
 const getWeather = weather => ({type: GET_WEATHER, weather})
+export const resetWeather = () => ({type: RESET_WEATHER})
 
 /**
  * THUNK CREATORS
@@ -60,6 +62,8 @@ export default function(state = cityWeather, action) {
   switch (action.type) {
     case GET_WEATHER:
       return action.weather
+    case RESET_WEATHER:
+      return {snowAverage: {}, rainAverage: {}}
     default:
       return state
   }

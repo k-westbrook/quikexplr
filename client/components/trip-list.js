@@ -35,7 +35,11 @@ class TripList extends React.Component {
           <h4 className="title-home">My old trips!</h4>
           <OptionsBar />
           <div className="trip-instruction">
-            <h3>Click on your saved trips for info!</h3>
+            {this.props.trips.length > 0 ? (
+              <h3>Click on your saved trips for info!</h3>
+            ) : (
+              <h3>Click Start New Trip to Add To This List!</h3>
+            )}
           </div>
           <div className="trip-list">
             {this.props.trips.map(trip => {
