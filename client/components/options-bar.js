@@ -14,7 +14,7 @@ export const OptionsBar = props => {
         <p className="option-text">My Trips</p>
       </Link>
       <Link to="/home" className="option-choice">
-        <p className="option-text">My Profile</p>
+        <p className="option-text">Information</p>
       </Link>
       <Link to="/getNewTrip" className="option-choice">
         <p className="option-text">Start New Trip!</p>
