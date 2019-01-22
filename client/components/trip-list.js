@@ -3,7 +3,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {MainForm} from './main-form'
 import {OptionsBar} from './options-bar'
-import {withRouter, Route, Switch} from 'react-router-dom'
+import {withRouter, Route, Switch, Link} from 'react-router-dom'
 import {Test} from './test.js'
 import {Profile} from './profile.js'
 import {CreateTripForm} from './create-trip.js'
@@ -23,7 +23,8 @@ class TripList extends React.Component {
   }
 
   removeTrip(tripId) {
-    this.props.removeTrip(tripId)
+    const trip = {tripId, singleView: false}
+    this.props.removeTrip(trip)
   }
 
   render() {
@@ -33,16 +34,31 @@ class TripList extends React.Component {
         <div className="user-box">
           <h4 className="title-home">My old trips!</h4>
           <OptionsBar />
-          {this.props.trips.map(trip => {
-            return (
-              <div key={trip.id}>
-                <ChosenCardMini chosenLocation={trip} />
-                <button type="submit" onClick={() => this.removeTrip(trip.id)}>
-                  XRemove
-                </button>
-              </div>
-            )
-          })}
+          <div className="trip-instruction">
+            {this.props.trips.length > 0 ? (
+              <h3>Click on your saved trips for info!</h3>
+            ) : (
+              <h3>Click Start New Trip to Add To This List!</h3>
+            )}
+          </div>
+          <div className="trip-list">
+            {this.props.trips.map(trip => {
+              return (
+                <div className="list-item" key={trip.id}>
+                  <ChosenCardMini chosenLocation={trip} />
+
+                  <div className="trip-remove">
+                    <button
+                      type="submit"
+                      onClick={() => this.removeTrip(trip.id)}
+                    >
+                      XRemove
+                    </button>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </div>
     )

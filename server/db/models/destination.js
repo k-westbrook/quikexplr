@@ -20,6 +20,10 @@ const Destination = db.define('destination', {
   longitude: {
     type: Sequelize.FLOAT,
     allowNull: false
+  },
+  stayCation: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 })
 

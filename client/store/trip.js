@@ -8,12 +8,15 @@ import {removeChoice} from '../store/location'
 const ADD_TRIP = 'ADD_TRIP'
 const GET_TRIP_LIST = 'GET_TRIP_LIST'
 const REMOVE_TRIP = 'REMOVE_TRIP'
+const GET_TRIP = 'GET_TRIP'
+const RESET_TRIP = 'RESET_TRIP'
 
 /**
  * INITIAL STATE
  */
 const defaultTripList = {
-  trips: []
+  trips: [],
+  selectedTrip: {}
 }
 
 /**
@@ -22,6 +25,8 @@ const defaultTripList = {
 const getTripList = trips => ({type: GET_TRIP_LIST, trips})
 const removeTrip = tripId => ({type: REMOVE_TRIP, tripId})
 const addTrip = trip => ({type: ADD_TRIP, trip})
+const getTrip = trip => ({type: GET_TRIP, trip})
+export const resetTrip = () => ({type: RESET_TRIP})
 
 /**
  * THUNK CREATORS
@@ -39,18 +44,33 @@ export const addTripThunk = () => async dispatch => {
 
 export const getTripListThunk = () => async dispatch => {
   try {
-    const res = await axios.get('api/trips/tripList')
+    const res = await axios.get('/api/trips/tripList')
     dispatch(getTripList(res.data))
   } catch (err) {
     console.error(err)
   }
 }
-
-export const removeTripThunk = tripId => async dispatch => {
+export const getTripThunk = tripId => async dispatch => {
   try {
-    await axios.put('api/trips/removeTrip', {tripId})
+    const res = await axios.get(`/api/trips/getTrip/${tripId}`)
+
+    dispatch(getTrip(res.data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const removeTripThunk = trip => async dispatch => {
+  try {
+    const tripId = trip.tripId
+
+    await axios.put('/api/trips/removeTrip', {tripId: tripId})
 
     dispatch(removeTrip(tripId))
+
+    if (trip.singleView) {
+      history.push('/myTrips')
+    }
   } catch (err) {
     console.error(err)
   }
@@ -72,8 +92,12 @@ export default function(state = defaultTripList, action) {
           newArr.push(trip)
         }
       })
-      return {...state, trips: newArr}
+      return {...state, trips: newArr, selectedTrip: {}}
     }
+    case GET_TRIP:
+      return {...state, selectedTrip: action.trip}
+    case RESET_TRIP:
+      return {...state, selectedTrip: {}}
     default:
       return state
   }

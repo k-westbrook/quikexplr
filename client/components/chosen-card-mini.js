@@ -1,5 +1,5 @@
 import React from 'react'
-
+import {withRouter, Route, Switch, Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {MainForm} from './main-form'
 import {OptionsBar} from './options-bar'
@@ -9,18 +9,12 @@ import {OptionsBar} from './options-bar'
  */
 export const ChosenCardMini = props => {
   return (
-    <div className="chosen-box-mini">
-      <div className="chosen-img">
-        <img
-          className="chosen-image"
-          src="https://res.cloudinary.com/dmp2crnzz/image/upload/v1547869002/static/quik2.jpg"
-        />
-      </div>
-      <div className="chosen-info">
+    <Link to={`/savedTrip/${props.chosenLocation.id}`}>
+      <div className="trip-item">
         <p>
           {props.chosenLocation.name},{props.chosenLocation.state}
         </p>
       </div>
-    </div>
+    </Link>
   )
 }

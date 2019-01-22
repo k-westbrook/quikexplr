@@ -79,12 +79,21 @@ export const getLocationThunk = () => async dispatch => {
         chosenCityName === res.data.city &&
         chosenStateName === res.data.region_name
       ) {
-        attractionArr = []
+        let attractionsData = await axios.post('api/location/getActivities', {
+          lat,
+          long
+        })
+        attractionArr = attractionsData.data.results.items
         chosenCityName = res.data.city
         chosenStateName = res.data.region_name
       }
     } else {
-      attractionArr = []
+      let attractionsData = await axios.post('api/location/getActivities', {
+        lat,
+        long
+      })
+
+      attractionArr = attractionsData.data.results.items
       chosenCityName = res.data.city
       chosenStateName = res.data.region_name
     }
@@ -94,7 +103,8 @@ export const getLocationThunk = () => async dispatch => {
       name: chosenCityName,
       state: chosenStateName,
       attractions: attractionArr,
-      restaurants
+      restaurants,
+      sameCity
     }
     await axios.post('/api/location/addDestination/', chosenDestination)
 
@@ -116,9 +126,7 @@ export const getChosenDestinationThunk = () => async dispatch => {
 
 export const removeChoiceThunk = () => async dispatch => {
   try {
-    const chosenDestination = await axios.delete(
-      '/api/location/chosenDestination'
-    )
+    await axios.delete('/api/location/chosenDestination')
 
     dispatch(removeChoice())
   } catch (error) {
@@ -135,7 +143,6 @@ export default function(state = location, action) {
     case GET_DESTINATION:
       return {...state, chosenDestination: action.chosenDestination}
     case REMOVE_CHOICE:
-      console.log('MADE IT')
       return {...state, chosenDestination: {}}
     default:
       return state

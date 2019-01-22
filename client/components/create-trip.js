@@ -31,41 +31,66 @@ export class CreateTripForm extends React.Component {
         <div className="user-box">
           <h4 className="title-home">Give me a destination!</h4>
           <OptionsBar />
-          {!this.props.consent ? (
-            <form onSubmit={this.handleConsent}>
+          <div className="main-content">
+            {!this.props.consent ? (
               <div>
-                <label htmlFor="consent">
-                  <small>
-                    I understand and give consent for QuikExplr to find my
-                    current location.
-                  </small>
-                </label>
-                <input name="consent" type="checkbox" value="1" required />
-              </div>
-              <button type="submit">Submit</button>
-            </form>
-          ) : (
-            <div>
-              <button type="submit" onClick={this.props.getLocation}>
-                {' '}
-                Find me a place!
-              </button>
+                <form onSubmit={this.handleConsent}>
+                  <label htmlFor="consent">
+                    <small>
+                      I understand and give consent for QuikExplr to find my
+                      current location.
+                    </small>
+                  </label>
+                  <input name="consent" type="checkbox" value="1" required />
 
-              {this.props.chosenLocation.coordinates && (
-                <div>
-                  <p>
-                    It looks like you are in {this.props.location.city},{' '}
-                    {this.props.location.region_name}
-                  </p>
-                  <div>
-                    <Link to="/newPlace">
-                      <ChosenCard chosenLocation={this.props.chosenLocation} />
-                    </Link>
+                  <button type="submit">Submit</button>
+                </form>
+              </div>
+            ) : (
+              <div className="create-destination">
+                {this.props.chosenLocation.coordinates ? (
+                  <div className="button-container">
+                    <button
+                      className="find-place-button"
+                      type="submit"
+                      onClick={this.props.getLocation}
+                    >
+                      {' '}
+                      Find me another place!
+                    </button>
                   </div>
-                </div>
-              )}
-            </div>
-          )}
+                ) : (
+                  <div className="button-container">
+                    <button
+                      className="find-place-button"
+                      type="submit"
+                      onClick={this.props.getLocation}
+                    >
+                      {' '}
+                      Find me a place!
+                    </button>
+                  </div>
+                )}
+                {this.props.chosenLocation.coordinates && (
+                  <div className="created">
+                    <div>
+                      <p className="location-sentence">
+                        It looks like you are in {this.props.location.city},{' '}
+                        {this.props.location.region_name}
+                      </p>
+                    </div>
+                    <div className="chosen-card">
+                      <Link to="/newPlace">
+                        <ChosenCard
+                          chosenLocation={this.props.chosenLocation}
+                        />
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     )

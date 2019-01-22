@@ -1,55 +1,56 @@
 import React from 'react'
-
 import {connect} from 'react-redux'
+import {withRouter, Route, Switch, Link} from 'react-router-dom'
 import {MainForm} from './main-form'
 import {OptionsBar} from './options-bar'
 import {RestaurantList} from './restaurant-list'
 import {AttractionList} from './attraction-list'
-import {getChosenDestinationThunk, removeChoiceThunk} from '../store/location'
-import {getWeatherThunk} from '../store/weather'
-import {addTripThunk} from '../store/trip'
+import {getWeatherThunk, resetWeather} from '../store/weather'
+import {getTripThunk, removeTripThunk, resetTrip} from '../store/trip'
 
 /**
  * COMPONENT
  */
-export class SinglePlace extends React.Component {
+export class SingleTrip extends React.Component {
   constructor() {
     super()
+
+    this.removeTrip = this.removeTrip.bind(this)
     this.handleClick = this.handleClick.bind(this)
-    this.addTrip = this.addTrip.bind(this)
-    this.returnToCreate = this.returnToCreate.bind(this)
+    this.returnClick = this.returnClick.bind(this)
   }
   componentDidMount() {
-    this.props.getGetChosenDestination()
+    const tripId = this.props.match.params.tripId
+
+    this.props.getTrip(tripId)
   }
 
   handleClick() {
     this.props.getWeather(
-      this.props.chosenDestination.coordinates.latitude,
-      this.props.chosenDestination.coordinates.longitude
+      this.props.trip.coordinates.latitude,
+      this.props.trip.coordinates.longitude
     )
   }
-
-  addTrip() {
-    this.props.addTrip(this.props.chosenDestination.id)
+  removeTrip(tripId) {
+    const trip = {tripId, singleView: true}
+    this.props.removeTrip(trip)
   }
 
-  returnToCreate() {
-    this.props.returnToCreate(this.props.chosenDestination.id)
+  returnClick() {
+    this.props.resetTrip()
+    this.props.resetWeather()
+    this.props.history.goBack()
   }
 
   render() {
-    const {weather, chosenDestination} = this.props
+    const {trip} = this.props
     return (
       <div>
         {this.props.restaurants && (
           <div>
             <MainForm />
             <div className="user-box">
-              <h3 className="title-home">
-                {' '}
-                Meet {this.props.chosenDestination.name}
-              </h3>
+              <h3 className="title-home"> Welcome back to {trip.name}</h3>
               <OptionsBar />
 
               <div className="single-view-box">
@@ -60,8 +61,8 @@ export class SinglePlace extends React.Component {
                         <h4>Weather Average for next 5 days</h4>
                         <p className="weather-lines">
                           <span className="weather-cat"> Average Temp: </span>{' '}
-                          {weather.tempAverage.farenheit} F ({
-                            weather.tempAverage.celsius
+                          {this.props.weather.tempAverage.farenheit} F ({
+                            this.props.weather.tempAverage.celsius
                           }{' '}
                           C)
                           <br />
@@ -69,21 +70,22 @@ export class SinglePlace extends React.Component {
                             {' '}
                             Chance of Rain:
                           </span>{' '}
-                          {weather.rainAverage.rainStrChance} <br />
+                          {this.props.weather.rainAverage.rainStrChance} <br />
                           <span className="weather-cat">
                             {' '}
                             Chance of Snow:
                           </span>{' '}
-                          {weather.snowAverage.snowStrChance}
+                          {this.props.weather.snowAverage.snowStrChance}
                           <br />
                           <span className="weather-cat">
                             {' '}
                             Clear Skies Percent:{' '}
                           </span>
-                          {weather.clearAverage}%
+                          {this.props.weather.clearAverage}%
                         </p>
-                        {weather.rainAverage.extremeWeatherWarn ||
-                          (weather.snowAverage.extremeWeatherWarn && (
+                        {this.props.weather.rainAverage.extremeWeatherWarn ||
+                          (this.props.weather.snowAverage
+                            .extremeWeatherWarn && (
                             <div>
                               <p className="extreme-weather-warning">
                                 Looking for adventure? This place might have
@@ -92,7 +94,7 @@ export class SinglePlace extends React.Component {
                               </p>
                             </div>
                           ))}
-                        {weather.snowAverage.pleasantWinter && (
+                        {this.props.weather.snowAverage.pleasantWinter && (
                           <div>
                             <p className="pleasant-winter-message">
                               Get ready to get cozy! A pleasant light snow fall
@@ -122,16 +124,17 @@ export class SinglePlace extends React.Component {
                       <button
                         className="decision-button"
                         type="submit"
-                        onClick={this.addTrip}
+                        onClick={this.returnClick}
                       >
-                        Add it to trips!
+                        Return to My Trips
                       </button>
+
                       <button
                         className="decision-button"
                         type="submit"
-                        onClick={this.returnToCreate}
+                        onClick={() => this.removeTrip(trip.id)}
                       >
-                        No thank you!
+                        Remove this from my trips!
                       </button>
                     </div>
                   </div>
@@ -144,7 +147,7 @@ export class SinglePlace extends React.Component {
                       className="rest-list"
                     />
                   </div>
-                  {!chosenDestination.sameCity ? (
+                  {!trip.sameCity ? (
                     <div className="attraction-box">
                       <h4>Things to See and Do</h4>
                       <AttractionList
@@ -175,23 +178,20 @@ export class SinglePlace extends React.Component {
  */
 const mapState = state => {
   return {
-    restaurants: state.location.chosenDestination.restaurants,
-    attractions: state.location.chosenDestination.attractions,
-    location: state.location.userLocation,
-    chosenDestination: state.location.chosenDestination,
-    weather: state.weather
+    trip: state.trip.selectedTrip,
+    weather: state.weather,
+    restaurants: state.trip.selectedTrip.restaurants,
+    attractions: state.trip.selectedTrip.attractions
   }
 }
 const mapDispatch = (dispatch, ownProps) => {
   return {
-    getGetChosenDestination: () => dispatch(getChosenDestinationThunk()),
     getWeather: (lat, long) => dispatch(getWeatherThunk(lat, long)),
-    addTrip: id => dispatch(addTripThunk(id)),
-    returnToCreate: id => {
-      dispatch(removeChoiceThunk(id))
-      ownProps.history.push('/getNewTrip')
-    }
+    getTrip: id => dispatch(getTripThunk(id)),
+    removeTrip: trip => dispatch(removeTripThunk(trip)),
+    resetTrip: () => dispatch(resetTrip()),
+    resetWeather: () => dispatch(resetWeather())
   }
 }
 
-export default connect(mapState, mapDispatch)(SinglePlace)
+export default connect(mapState, mapDispatch)(SingleTrip)
