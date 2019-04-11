@@ -50,6 +50,7 @@ export class SingleTrip extends React.Component {
           <div>
             <MainForm />
             <div className="user-box">
+              <input type="file" accept="image/*" capture="user" />
               <h3 className="title-home"> Welcome back to {trip.name}</h3>
               <OptionsBar />
 

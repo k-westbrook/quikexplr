@@ -13,6 +13,7 @@ router.post('/', async (req, res, next) => {
     if (err) {
       console.log(err)
     } else {
+      console.log('NON PARSED', body)
       let weather = JSON.parse(body)
       res.json(weather)
     }
